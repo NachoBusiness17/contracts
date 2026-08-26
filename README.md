@@ -153,9 +153,13 @@ Higher tiers also increase governance voting weight and receive priority task ro
 | Contract | Address |
 |---|---|
 | GSTDJetton | `EQDv6cYW9nNiKjN3Nwl8D6ABjUiH1gYfWVGZhfP7-9tZskTO` |
-| AgentRegistry | `EQDtWcGCQXLFdh7TmkL5QFbFNYXxL9mjOk4ehmsNFwCtsDoT` |
-| DAOVoting | `EQBa-hyO3JkcRJNyYKKOqBjsQ6KAS-dAHj6rf8KOuH4Jzls5` |
-| Escrow | `EQCucUHZGCr8KwBalmumsITvtMBtc5ZylAfw7sJk5SXpBWVh` |
+| EcosystemTreasury | `EQAbtTCsty8-gpX-45eotGWxnYG1c7ew7NFsZ9LJBRiv_Ii_` |
+| SettlementMaster | `EQAhuR_cEaIkRqs4gvgXSD-Qw2FRUkkBUZQkTBrFT5n-ZrSS` |
+| Escrow | `EQDqdyFsruwXzlScIVM0c7LKbBb4EOgwLeFO4bpNnuwc7rTF` |
+| DAOVoting | `EQBQXvFtHbQnuUuLgkF-TKYw5dgo__XCEzVfBIm_OfW2ck-z` |
+| AgentRegistry | `EQBfrc8qzoJ39-9ldQyC2Wif4HXbYHXKARvCUlY0IbwqNLR9` |
+
+SettlementRouter, TreasuryGold, GstdBridge, ProviderRegistry, and SlashMechanics are not yet deployed to mainnet.
 
 ---
 

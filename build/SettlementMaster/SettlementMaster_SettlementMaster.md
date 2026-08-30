@@ -1,9 +1,9 @@
 # Tact compilation report
 Contract: SettlementMaster
-BoC Size: 4428 bytes
+BoC Size: 4920 bytes
 
 ## Structures (Structs and Messages)
-Total structures: 32
+Total structures: 34
 
 ### DataSize
 TL-B: `_ cells:int257 bits:int257 refs:int257 = DataSize`
@@ -101,6 +101,14 @@ Signature: `SetGateway{gateway:address}`
 TL-B: `set_own_jetton_wallet#d4d7e3ab wallet:address = SetOwnJettonWallet`
 Signature: `SetOwnJettonWallet{wallet:address}`
 
+### SetClaimVerifier
+TL-B: `set_claim_verifier#c1a10001 pubkey:uint256 = SetClaimVerifier`
+Signature: `SetClaimVerifier{pubkey:uint256}`
+
+### ClaimUptime
+TL-B: `claim_uptime#c1a10002 wallet:address amount:coins nonce:uint64 expiry:uint64 sigCell:^cell = ClaimUptime`
+Signature: `ClaimUptime{wallet:address,amount:coins,nonce:uint64,expiry:uint64,sigCell:^cell}`
+
 ### RegisterAttestorKey
 TL-B: `register_attestor_key#8b75d73e pubkey:uint256 authorized:bool = RegisterAttestorKey`
 Signature: `RegisterAttestorKey{pubkey:uint256,authorized:bool}`
@@ -118,8 +126,8 @@ TL-B: `settle_batch#2c6e4484 workerAddr:address entryCount:uint8 entries:^cell t
 Signature: `SettleBatch{workerAddr:address,entryCount:uint8,entries:^cell,totalGstdBonusAmount:coins}`
 
 ### SettlementMaster$Data
-TL-B: `_ owner:address gateway:address gstdJetton:address treasury:address protocolFee:address workerShare:uint8 treasuryShare:uint8 protocolShare:uint8 baseRate:coins totalSettled:coins totalGSTDMinted:coins taskCount:uint64 ownJettonWallet:address settledTasks:dict<int, bool> paused:bool minPayment:coins attestorKeys:dict<int, bool> quorumThreshold:uint8 = SettlementMaster`
-Signature: `SettlementMaster{owner:address,gateway:address,gstdJetton:address,treasury:address,protocolFee:address,workerShare:uint8,treasuryShare:uint8,protocolShare:uint8,baseRate:coins,totalSettled:coins,totalGSTDMinted:coins,taskCount:uint64,ownJettonWallet:address,settledTasks:dict<int, bool>,paused:bool,minPayment:coins,attestorKeys:dict<int, bool>,quorumThreshold:uint8}`
+TL-B: `_ owner:address gateway:address gstdJetton:address treasury:address protocolFee:address workerShare:uint8 treasuryShare:uint8 protocolShare:uint8 baseRate:coins totalSettled:coins totalGSTDMinted:coins taskCount:uint64 ownJettonWallet:address settledTasks:dict<int, bool> paused:bool minPayment:coins attestorKeys:dict<int, bool> quorumThreshold:uint8 claimVerifierPubkey:uint256 usedClaimNonces:dict<int, bool> = SettlementMaster`
+Signature: `SettlementMaster{owner:address,gateway:address,gstdJetton:address,treasury:address,protocolFee:address,workerShare:uint8,treasuryShare:uint8,protocolShare:uint8,baseRate:coins,totalSettled:coins,totalGSTDMinted:coins,taskCount:uint64,ownJettonWallet:address,settledTasks:dict<int, bool>,paused:bool,minPayment:coins,attestorKeys:dict<int, bool>,quorumThreshold:uint8,claimVerifierPubkey:uint256,usedClaimNonces:dict<int, bool>}`
 
 ### SettlementStats
 TL-B: `_ totalSettled:coins totalGSTDMinted:coins taskCount:uint64 baseRate:coins = SettlementStats`
@@ -198,19 +206,28 @@ No arguments
 * 136: Invalid standard address
 * 138: Not a basechain address
 * 5300: Empty batch
+* 7189: Zero amount
+* 7212: Claims disabled
 * 8484: Payment below minimum
+* 13152: Voucher expired
 * 16246: Insufficient value for gas reserve
+* 17091: Nonce already used
 * 17839: Insufficient attested quorum for batch entry
 * 20709: Batch too large
 * 22722: Must sum to 100
 * 27818: Rate must be positive
 * 32292: Worker address cannot be zero
+* 34480: Wallet mismatch — send from wallet in voucher
 * 38610: Settlement paused
 * 40616: Threshold must be at least 1
 * 45933: Worker share minimum 50%
+* 48401: Invalid signature
 * 49269: Insufficient attested quorum
 * 50353: Only DAO or Gateway can settle
 * 54291: Task already settled
+* 57920: Owner only
+* 58387: Attach 0.15 TON
+* 59457: Paused
 * 63399: Only DAO
 
 ## Trait inheritance diagram

@@ -1,4 +1,4 @@
-// automatically generated from `@stdlib/std/stdlib.fc` `C:/Users/Marina/AppData/Local/Temp/claude/C--Users-Marina/cdf7a121-87e5-4582-93a7-f777c20c7106/scratchpad/contracts-full/build/SettlementMaster/SettlementMaster_SettlementMaster.fc` 
+// automatically generated from `@stdlib/std/stdlib.fc` `/home/bot/contracts/build/SettlementMaster/SettlementMaster_SettlementMaster.fc` 
 PROGRAM{
   DECLPROC __tact_context_get
   DECLPROC __tact_context_get_sender
@@ -130,27 +130,27 @@ PROGRAM{
     -ROT
   }>
   $SettlementMaster$_store PROCINLINE:<{
+    s1 19 s() XCHG
+    s0 20 s() XCHG
+    STSLICE
     s1 17 s() XCHG
-    s0 18 s() XCHG
     STSLICE
     s1 s15 XCHG
     STSLICE
-    s1 s13 XCHG
-    STSLICE
-    s0 s11 XCHG
+    s0 s13 XCHG
     NEWC
     STSLICE
-    s1 s10 XCHG
+    s1 s12 XCHG
     STSLICE
+    s1 s10 XCHG
+    8 STU
     s1 s8 XCHG
     8 STU
     s1 s6 XCHG
     8 STU
-    s1 s4 XCHG
-    8 STU
-    ROT
+    s0 s4 XCHG2
     STVARUINT16
-    SWAP
+    ROT
     STVARUINT16
     SWAP
     STVARUINT16
@@ -160,14 +160,18 @@ PROGRAM{
     STSLICE
     s1 s2 XCHG
     STDICT
-    s1 s3 XCHG
+    s1 s2 XCHG
     1 STI
-    s0 s3 XCHG2
+    ROT
     STVARUINT16
     s1 s3 XCHG
     STDICT
     s1 s3 XCHG
     8 STU
+    s1 s3 XCHG
+    256 STU
+    s1 s3 XCHG
+    STDICT
     STBREFR
     STBREFR
   }>
@@ -196,10 +200,12 @@ PROGRAM{
     LDVARUINT16
     LDDICT
     8 LDU
+    256 LDU
+    LDDICT
     DROP
-    s15 18 s() XCHG
-    s15 17 s() XCHG
-    s15 16 s() XCHG
+    17 s() 20 s() XCHG
+    17 s() 19 s() XCHG
+    17 s() 18 s() XCHG
   }>
   $Context$_get_value PROCINLINE:<{
     s1 s3 XCHG
@@ -226,7 +232,8 @@ PROGRAM{
   $SettlementMaster$_contract_init PROCINLINE:<{
     PUSHNULL
     PUSHNULL
-    s5 PUSH
+    PUSHNULL
+    s6 PUSH
     85 PUSHINT
     10 PUSHINT
     5 PUSHINT
@@ -236,21 +243,24 @@ PROGRAM{
     FALSE
     50000000 PUSHINT
         B{b5ee9c72410101010024000043800000000000000000000000000000000000000000000000000000000000000000104aec829d} B>boc <s PUSHSLICE
-    s10 16 s() XCHG
-    s10 s15 XCHG
-    s10 s14 XCHG
-    s10 s13 XCHG
-    s10 s12 XCHG
-    s9 s11 XCHG
-    s8 s10 XCHG
-    s7 s9 XCHG
-    s6 s8 XCHG
-    s5 s7 XCHG
-    s4 s6 XCHG
-    s3 s5 XCHG
-    s0 s4 XCHG
-    s0 s3 XCHG
     2 PUSHINT
+    s4 PUSH
+    s12 19 s() XCHG
+    s12 18 s() XCHG
+    s12 17 s() XCHG
+    s12 16 s() XCHG
+    s12 s15 XCHG
+    s11 s14 XCHG
+    s10 s13 XCHG
+    s9 s12 XCHG
+    s8 s11 XCHG
+    s7 s10 XCHG
+    s6 s9 XCHG
+    s5 s8 XCHG
+    s2 s7 XCHG
+    s4 s5 XCHG
+    s3 s4 XCHG
+    ROT
   }>
   $SettlementMaster$_contract_load PROCINLINE:<{
     c4 PUSH
@@ -259,7 +269,9 @@ PROGRAM{
     SWAP
     IF:<{
       $SettlementMaster$_load INLINECALLDICT
-      18 s() POP
+      20 s() POP
+      18 s() 19 s() XCHG
+      17 s() 18 s() XCHG
       16 s() 17 s() XCHG
       s15 16 s() XCHG
       15 ROLL
@@ -276,6 +288,8 @@ PROGRAM{
     TRUE
     SWAP
     1 STI
+    s0 20 s() XCHG
+    s0 19 s() XCHG
     s0 18 s() XCHG
     s0 17 s() XCHG
     s0 16 s() XCHG
@@ -295,12 +309,12 @@ PROGRAM{
   }>
   $SettlementMaster$_fun_settlePayout PROCREF:<{
     s2 PUSH
-    18 s() PUSH
+    20 s() PUSH
     MUL
     100 PUSHINT
     DIV
     s3 PUSH
-    18 s() PUSH
+    20 s() PUSH
     MUL
     100 PUSHINT
     DIV
@@ -315,7 +329,7 @@ PROGRAM{
       1000000000 PUSHINT
       s4 POP
     }>
-    17 s() PUSH
+    19 s() PUSH
     s0 s4 XCHG2
     MUL
     s4 s4 s0 PUSH3
@@ -325,12 +339,13 @@ PROGRAM{
     }>ELSE<{
       NIP
     }>
-    s1 16 s() XCHG
+    s1 18 s() XCHG
     s0 s5 XCHG
     ADD
-    s14 s4 XCPU
+    s0 16 s() XCHG
+    s4 PUSH
     ADD
-    s0 s13 XCHG
+    s0 s15 XCHG
     INC
     2 PUSHINT
     s7 s2 PUSH2
@@ -413,9 +428,9 @@ PROGRAM{
     2 PUSHINT
     FALSE
         B{b5ee9c7241010101000d000016000000006465706f736974b5adf9ec} B>boc PUSHREF
-    22 s() PUSH
+    24 s() PUSH
     s0 s4 XCHG
-    s0 17 s() XCHG
+    s0 19 s() XCHG
     3 -ROLL
     $SendParameters$_constructor_to_value_mode_bounce_body INLINECALLDICT
         NEWC
@@ -487,9 +502,9 @@ PROGRAM{
     2 PUSHINT
     FALSE
         B{b5ee9c7241010101000d000016000000006275796261636bc0ba973f} B>boc PUSHREF
-    20 s() PUSH
+    22 s() PUSH
     s0 s4 XCHG
-    s0 16 s() XCHG
+    s0 18 s() XCHG
     3 -ROLL
     $SendParameters$_constructor_to_value_mode_bounce_body INLINECALLDICT
         NEWC
@@ -562,7 +577,7 @@ PROGRAM{
     0 GTINT
     IF:<{
           B{b5ee9c72410101010024000043800000000000000000000000000000000000000000000000000000000000000000104aec829d} B>boc <s PUSHSLICE
-      s9 s(-1) PUXC
+      s11 s(-1) PUXC
       SDEQ
       NOT
     }>ELSE<{
@@ -593,7 +608,7 @@ PROGRAM{
       s1 s2 XCHG
           1 STI
           ENDC
-      s9 PUSH
+      s11 PUSH
       s4 s1 s4 XCHG3
       s3 s3 XCHG2
       $SendParameters$_constructor_to_value_mode_bounce_body INLINECALLDICT
@@ -666,11 +681,11 @@ PROGRAM{
     }>ELSE<{
       3 BLKDROP
     }>
-    s7 s8 XCHG
-    s6 s7 XCHG
+    s9 s10 XCHG
+    s8 s9 XCHG
   }>
   $SettlementMaster$_fun_verifyQuorum PROCREF:<{
-    s1 s5 PUSH2
+    s1 s7 PUSH2
     LESS
     IFJMP:<{
       5 BLKDROP
@@ -766,7 +781,7 @@ PROGRAM{
       }>
       NOT
       IF:<{
-        s14 PUSH
+        16 s() PUSH
         257 PUSHINT
         s4 PUSH
         1 PUSHINT
@@ -804,38 +819,40 @@ PROGRAM{
     }>
     s1 s9 XCHG
     9 BLKDROP
-    OVER
+    s3 PUSH
     GEQ
   }>
   $SettlementStats$_constructor_totalSettled_totalGSTDMinted_taskCount_baseRate PROCINLINE:<{
   }>
   $SettlementMaster$_fun_get_settlement_stats PROCREF:<{
-    s8 s7 s6 PUSH3
-    s12 PUSH
+    s10 s9 s8 PUSH3
+    s14 PUSH
     $SettlementStats$_constructor_totalSettled_totalGSTDMinted_taskCount_baseRate INLINECALLDICT
   }>
   $RevenueSplit$_constructor_worker_treasury_protocol PROCINLINE:<{
   }>
   $SettlementMaster$_fun_get_revenue_split PROCREF:<{
-    s12 s11 s10 PUSH3
+    s14 s13 s12 PUSH3
     $RevenueSplit$_constructor_worker_treasury_protocol INLINECALLDICT
   }>
   $ContractAddresses$_constructor_gstdJetton_treasury_protocolFee_owner PROCINLINE:<{
   }>
   $SettlementMaster$_fun_get_addresses PROCREF:<{
-    s15 s14 s13 PUSH3
-    20 s() PUSH
+    17 s() PUSH
+    17 s() PUSH
+    17 s() PUSH
+    22 s() PUSH
     $ContractAddresses$_constructor_gstdJetton_treasury_protocolFee_owner INLINECALLDICT
   }>
   $SettlementMaster$_fun_is_paused PROCREF:<{
-    s3 PUSH
+    s5 PUSH
   }>
   $SettlementMaster$_fun_get_quorum_threshold PROCREF:<{
-    DUP
+    s2 PUSH
   }>
   $SettlementMaster$_fun_is_attestor_authorized PROCREF:<{
     257 PUSHINT
-    s3 PUSH
+    s5 PUSH
     s0 s2 XCHG
     1 PUSHINT
     __tact_dict_get_int_int INLINECALLDICT
@@ -844,7 +861,7 @@ PROGRAM{
   }>
   $SettlementMaster$_fun_is_task_settled PROCREF:<{
     257 PUSHINT
-    s6 PUSH
+    s8 PUSH
     s0 s2 XCHG
     1 PUSHINT
     __tact_dict_get_int_int INLINECALLDICT
@@ -882,7 +899,7 @@ PROGRAM{
         SENDRAWMSG
   }>
   $SettlementMaster$_fun_owner PROCREF:<{
-    17 s() PUSH
+    19 s() PUSH
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
@@ -890,21 +907,21 @@ PROGRAM{
     $SettlementMaster$_contract_load INLINECALLDICT
     $SettlementMaster$_fun_get_settlement_stats INLINECALLDICT
     12 4 BLKDROP2
-    6 4 BLKDROP2
+    8 4 BLKDROP2
     $SettlementStats$_to_external INLINECALLDICT
   }>
   %get_revenue_split PROC:<{
     $SettlementMaster$_contract_load INLINECALLDICT
     $SettlementMaster$_fun_get_revenue_split INLINECALLDICT
     15 3 BLKDROP2
-    3 3 BLKDROP2
+    5 3 BLKDROP2
     $RevenueSplit$_to_external INLINECALLDICT
   }>
   %get_addresses PROC:<{
     $SettlementMaster$_contract_load INLINECALLDICT
     $SettlementMaster$_fun_get_addresses INLINECALLDICT
     12 4 BLKDROP2
-    6 4 BLKDROP2
+    8 4 BLKDROP2
     $ContractAddresses$_to_external INLINECALLDICT
   }>
   %is_paused PROC:<{
@@ -912,17 +929,19 @@ PROGRAM{
     $SettlementMaster$_fun_is_paused INLINECALLDICT
     16 s() POP
     15 BLKDROP
-    2 1 BLKDROP2
+    4 1 BLKDROP2
   }>
   %get_quorum_threshold PROC:<{
     $SettlementMaster$_contract_load INLINECALLDICT
     $SettlementMaster$_fun_get_quorum_threshold INLINECALLDICT
     16 s() POP
     15 BLKDROP
-    2 1 BLKDROP2
+    4 1 BLKDROP2
   }>
   %is_attestor_authorized PROC:<{
     $SettlementMaster$_contract_load INLINECALLDICT
+    19 s() 20 s() XCHG
+    18 s() 19 s() XCHG
     17 s() 18 s() XCHG
     16 s() 17 s() XCHG
     s15 16 s() XCHG
@@ -930,10 +949,12 @@ PROGRAM{
     $SettlementMaster$_fun_is_attestor_authorized INLINECALLDICT
     16 s() POP
     15 BLKDROP
-    2 1 BLKDROP2
+    4 1 BLKDROP2
   }>
   %is_task_settled PROC:<{
     $SettlementMaster$_contract_load INLINECALLDICT
+    19 s() 20 s() XCHG
+    18 s() 19 s() XCHG
     17 s() 18 s() XCHG
     16 s() 17 s() XCHG
     s15 16 s() XCHG
@@ -941,14 +962,14 @@ PROGRAM{
     $SettlementMaster$_fun_is_task_settled INLINECALLDICT
     16 s() POP
     15 BLKDROP
-    2 1 BLKDROP2
+    4 1 BLKDROP2
   }>
   %owner PROC:<{
     $SettlementMaster$_contract_load INLINECALLDICT
     $SettlementMaster$_fun_owner INLINECALLDICT
     16 s() POP
     15 BLKDROP
-    2 1 BLKDROP2
+    4 1 BLKDROP2
   }>
   recv_internal PROC:<{
     SWAP
@@ -966,9 +987,9 @@ PROGRAM{
     s0 s2 XCHG
     __tact_context_sender SETGLOB
     $SettlementMaster$_contract_load INLINECALLDICT
-    s0 19 s() XCHG
+    s0 21 s() XCHG
     IFJMP:<{
-      s0 17 s() XCHG
+      s0 19 s() XCHG
       32 PUSHINT
       SDSKIPFIRST
       0 PUSHINT
@@ -989,7 +1010,7 @@ PROGRAM{
         66 PUSHINT
         FALSE
             B{b5ee9c7241010101001c00003400000000626f756e6365645f776f726b65725f7061796d656e748033f50b} B>boc PUSHREF
-        16 s() PUSH
+        18 s() PUSH
         4 -ROLL
         $SendParameters$_constructor_to_value_mode_bounce_body INLINECALLDICT
             NEWC
@@ -1058,6 +1079,8 @@ PROGRAM{
             // Group 5: Sending the message, with `mode` on top
             SWAP
             SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
+        17 s() 19 s() XCHG
+        16 s() 18 s() XCHG
         s15 17 s() XCHG
         s14 16 s() XCHG
         s13 s15 XCHG
@@ -1065,26 +1088,28 @@ PROGRAM{
         $SettlementMaster$_contract_store INLINECALLDICT
       }>
       15 BLKDROP
-      3 BLKDROP
+      5 BLKDROP
     }>
-    s0 17 s() XCHG
+    s0 19 s() XCHG
     32 LDUQ 130 THROWIFNOT
     OVER
     2824752052 PUSHINT
     EQUAL
     IFJMP:<{
       NIP
-      s15 POP
-      s0 s14 XCHG
+      17 s() POP
+      s0 16 s() XCHG
       LDMSGADDR
       DROP
       63399 PUSHINT
       __tact_context_get_sender INLINECALLDICT
-      17 s() PUSH
+      19 s() PUSH
       SDEQ
       THROWANYIFNOT
+      17 s() 19 s() XCHG
+      s0 18 s() XCHG
       s15 17 s() XCHG
-      s0 16 s() XCHG
+      s14 16 s() XCHG
       s13 s15 XCHG
       s12 s14 XCHG
       s11 s13 XCHG
@@ -1113,18 +1138,18 @@ PROGRAM{
       DROP
       50353 PUSHINT
       __tact_context_get_sender INLINECALLDICT
-      21 s() PUSH
+      23 s() PUSH
       SDEQ
       IF:<{
         TRUE
       }>ELSE<{
         __tact_context_get_sender INLINECALLDICT
-        20 s() PUSH
+        22 s() PUSH
         SDEQ
       }>
       THROWANYIFNOT
       38610 PUSHINT
-      s6 PUSH
+      s8 PUSH
       NOT
       THROWANYIFNOT
       32292 PUSHINT
@@ -1134,14 +1159,14 @@ PROGRAM{
       NOT
       THROWANYIFNOT
       54291 PUSHINT
-      s7 PUSH
+      s9 PUSH
       257 PUSHINT
       s6 PUSH
       1 PUSHINT
       __tact_dict_get_int_int INLINECALLDICT
       ISNULL
       THROWANYIFNOT
-      s0 s6 XCHG
+      s0 s8 XCHG
       257 PUSHINT
       s4 PUSH
       TRUE
@@ -1158,9 +1183,11 @@ PROGRAM{
       100000000 PUSHINT
       SUB
       8484 PUSHINT
-      s1 s6 PUSH2
+      s1 s8 PUSH2
       GEQ
       THROWANYIFNOT
+      22 s() 24 s() XCHG
+      21 s() 23 s() XCHG
       20 s() 22 s() XCHG
       19 s() 21 s() XCHG
       18 s() 20 s() XCHG
@@ -1172,9 +1199,9 @@ PROGRAM{
       s12 s14 XCHG
       s11 s13 XCHG
       s10 s12 XCHG
-      s9 s11 XCHG
+      s1 s11 XCHG
       s8 s10 XCHG
-      s1 s9 XCHG
+      s7 s9 XCHG
       s6 s8 XCHG
       s5 s7 XCHG
       s0 s0 s6 XCHG3
@@ -1196,7 +1223,7 @@ PROGRAM{
       64 LDU
       DROP
       38610 PUSHINT
-      s9 PUSH
+      s11 PUSH
       NOT
       THROWANYIFNOT
       32292 PUSHINT
@@ -1206,45 +1233,47 @@ PROGRAM{
       NOT
       THROWANYIFNOT
       54291 PUSHINT
-      s10 PUSH
+      s12 PUSH
       257 PUSHINT
       s9 PUSH
       1 PUSHINT
       __tact_dict_get_int_int INLINECALLDICT
       ISNULL
       THROWANYIFNOT
+      21 s() 24 s() XCHG
+      20 s() 23 s() XCHG
       19 s() 22 s() XCHG
-      18 s() 21 s() XCHG
-      17 s() 20 s() XCHG
+      18 s() 24 s() XCHG
+      17 s() 23 s() XCHG
       16 s() 22 s() XCHG
-      s15 21 s() XCHG
-      s14 20 s() XCHG
+      s15 24 s() XCHG
+      s14 23 s() XCHG
       s13 22 s() XCHG
-      s12 21 s() XCHG
-      s11 20 s() XCHG
+      s12 24 s() XCHG
+      s11 23 s() XCHG
       s10 22 s() XCHG
-      s9 21 s() XCHG
-      s8 20 s() XCHG
+      s9 24 s() XCHG
+      s8 23 s() XCHG
       s7 22 s() XCHG
-      s6 21 s() XCHG
-      s5 20 s() XCHG
+      s6 24 s() XCHG
+      s5 23 s() XCHG
       s4 22 s() XCHG
-      s3 23 s() XCHG
-      s2 24 s() XCHG
+      s3 25 s() XCHG
+      s2 26 s() XCHG
       49269 PUSHINT
-      22 s() PUSH
+      25 s() PUSH
       s0 s3 XCHG
-      22 s() PUSH
+      25 s() PUSH
       s0 s3 XCHG
       s2 25 s() XCHG
-      s1 26 s() XCHG
-      s0 27 s() XCHG
+      s1 28 s() XCHG
+      s0 29 s() XCHG
       $SettlementMaster$_fun_verifyQuorum INLINECALLDICT
       s1 21 s() XCHG
       THROWANYIFNOT
-      s0 s3 XCHG
+      s0 s5 XCHG
       257 PUSHINT
-      19 s() PUSH
+      22 s() PUSH
       TRUE
       1 PUSHINT
       __tact_dict_set_int_int INLINECALLDICT
@@ -1259,9 +1288,11 @@ PROGRAM{
       100000000 PUSHINT
       SUB
       8484 PUSHINT
-      s1 s3 PUSH2
+      s1 s5 PUSH2
       GEQ
       THROWANYIFNOT
+      19 s() 24 s() XCHG
+      18 s() 23 s() XCHG
       17 s() 22 s() XCHG
       16 s() 21 s() XCHG
       s15 20 s() XCHG
@@ -1273,12 +1304,12 @@ PROGRAM{
       s9 s14 XCHG
       s8 s13 XCHG
       s7 s12 XCHG
-      s6 s11 XCHG
+      s1 s11 XCHG
       s5 s10 XCHG
-      s1 s9 XCHG
+      s4 s9 XCHG
       s3 s8 XCHG
-      s0 s4 s7 XCHG3
-      s1 s6 XCHG
+      s0 s1 s7 XCHG3
+      s3 s4 XCHG2
       $SettlementMaster$_fun_settlePayout INLINECALLDICT
       $SettlementMaster$_contract_store INLINECALLDICT
     }>
@@ -1293,7 +1324,7 @@ PROGRAM{
       LDVARUINT16
       DROP
       38610 PUSHINT
-      s6 PUSH
+      s8 PUSH
       NOT
       THROWANYIFNOT
       32292 PUSHINT
@@ -1321,7 +1352,7 @@ PROGRAM{
       100000000 PUSHINT
       SUB
       8484 PUSHINT
-      s1 s6 PUSH2
+      s1 s8 PUSH2
       GEQ
       THROWANYIFNOT
       0 PUSHINT
@@ -1338,13 +1369,15 @@ PROGRAM{
         64 LDU
             LDREF
         54291 PUSHINT
-        16 s() PUSH
+        18 s() PUSH
         257 PUSHINT
         s8 PUSH
         1 PUSHINT
         __tact_dict_get_int_int INLINECALLDICT
         ISNULL
         THROWANYIFNOT
+        21 s() 30 s() XCHG
+        20 s() 29 s() XCHG
         19 s() 28 s() XCHG
         18 s() 27 s() XCHG
         17 s() 26 s() XCHG
@@ -1352,8 +1385,8 @@ PROGRAM{
         s15 24 s() XCHG
         s14 23 s() XCHG
         s13 22 s() XCHG
-        s12 21 s() XCHG
-        s11 20 s() XCHG
+        s12 30 s() XCHG
+        s11 29 s() XCHG
         s10 28 s() XCHG
         s9 27 s() XCHG
         s8 26 s() XCHG
@@ -1361,20 +1394,20 @@ PROGRAM{
         s6 24 s() XCHG
         s5 23 s() XCHG
         s4 22 s() XCHG
-        s3 29 s() XCHG
-        s2 30 s() XCHG
+        s3 31 s() XCHG
+        s2 32 s() XCHG
         17839 PUSHINT
         24 s() PUSH
         s0 s3 XCHG
-        23 s() PUSH
+        32 s() PUSH
         s0 s3 XCHG
         s2 25 s() XCHG
-        s0 32 s() XCHG
+        s0 34 s() XCHG
         SWAP
         $SettlementMaster$_fun_verifyQuorum INLINECALLDICT
         s1 21 s() XCHG
         THROWANYIFNOT
-        s1 s3 XCHG
+        s1 s5 XCHG
         257 PUSHINT
         SWAP
         s0 21 s() XCHG
@@ -1382,25 +1415,27 @@ PROGRAM{
         1 PUSHINT
         __tact_dict_set_int_int INLINECALLDICT
         s1 20 s() XCHG
-        s0 26 s() XCHG
+        s0 28 s() XCHG
         ADD
-        24 s() PUSH
+        26 s() PUSH
             SREFS
         0 GTINT
         IF:<{
           23 s() POP
-          s0 23 s() XCHG
+          s0 25 s() XCHG
               LDREF
           DROP
           s0 22 s() XCHG
-          s0 23 s() XCHG
+          s0 25 s() XCHG
         }>ELSE<{
-          24 s() POP
+          26 s() POP
         }>
         s0 19 s() XCHG
         INC
-        16 s() 24 s() XCHG
-        17 s() 23 s() XCHG
+        16 s() 26 s() XCHG
+        17 s() 25 s() XCHG
+        s15 24 s() XCHG
+        s14 23 s() XCHG
         s13 22 s() XCHG
         s12 21 s() XCHG
         s11 20 s() XCHG
@@ -1412,14 +1447,16 @@ PROGRAM{
         s5 s14 XCHG
         s4 s13 XCHG
         s3 s12 XCHG
-        s11 s0 s10 XCHG3
-        s0 s7 XCHG
-        s0 s9 XCHG
-        s0 s8 XCHG
+        s7 s11 XCHG
+        s1 s10 XCHG
+        s1 s9 XCHG
+        s7 s0 s8 XCHG3
       }>
       NIP
       s3 POP
       s3 POP
+      21 s() 23 s() XCHG
+      20 s() 22 s() XCHG
       19 s() 21 s() XCHG
       18 s() 20 s() XCHG
       17 s() 19 s() XCHG
@@ -1453,14 +1490,105 @@ PROGRAM{
       DROP
       63399 PUSHINT
       __tact_context_get_sender INLINECALLDICT
-      19 s() PUSH
+      21 s() PUSH
       SDEQ
       THROWANYIFNOT
-      s2 18 s() XCHG
+      s2 s3 XCHG
       257 PUSHINT
       -ROT
       1 PUSHINT
       __tact_dict_set_int_int INLINECALLDICT
+      17 s() 19 s() XCHG
+      16 s() 18 s() XCHG
+      s15 17 s() XCHG
+      s14 16 s() XCHG
+      s13 s15 XCHG
+      s12 s14 XCHG
+      s11 s13 XCHG
+      s10 s12 XCHG
+      s9 s11 XCHG
+      s8 s10 XCHG
+      s7 s9 XCHG
+      s6 s8 XCHG
+      s5 s7 XCHG
+      s4 s6 XCHG
+      s3 s5 XCHG
+      s1 s4 s3 XCHG3
+      $SettlementMaster$_contract_store INLINECALLDICT
+    }>
+    OVER
+    2068563096 PUSHINT
+    EQUAL
+    IFJMP:<{
+      2 1 BLKDROP2
+      8 LDU
+      DROP
+      63399 PUSHINT
+      __tact_context_get_sender INLINECALLDICT
+      19 s() PUSH
+      SDEQ
+      THROWANYIFNOT
+      40616 PUSHINT
+      OVER
+      0 GTINT
+      THROWANYIFNOT
+      17 s() 19 s() XCHG
+      16 s() 18 s() XCHG
+      s15 17 s() XCHG
+      s14 16 s() XCHG
+      s13 s15 XCHG
+      2 13 BLKSWAP
+      $SettlementMaster$_contract_store INLINECALLDICT
+    }>
+    OVER
+    3570918315 PUSHINT
+    EQUAL
+    IFJMP:<{
+      NIP
+      s6 POP
+      s0 s5 XCHG
+      LDMSGADDR
+      DROP
+      63399 PUSHINT
+      __tact_context_get_sender INLINECALLDICT
+      19 s() PUSH
+      SDEQ
+      THROWANYIFNOT
+      17 s() 19 s() XCHG
+      16 s() 18 s() XCHG
+      s15 17 s() XCHG
+      s14 16 s() XCHG
+      s13 s15 XCHG
+      s12 s14 XCHG
+      s11 s13 XCHG
+      s10 s12 XCHG
+      s9 s11 XCHG
+      s8 s10 XCHG
+      s7 s9 XCHG
+      s6 s8 XCHG
+      s0 s7 XCHG
+      s4 s6 XCHG
+      s3 s5 XCHG
+      s4 s3 s0 XCHG3
+      s1 s2 XCHG
+      $SettlementMaster$_contract_store INLINECALLDICT
+    }>
+    OVER
+    3248553985 PUSHINT
+    EQUAL
+    IFJMP:<{
+      NIP
+      19 s() POP
+      s0 18 s() XCHG
+      256 LDU
+      DROP
+      57920 PUSHINT
+      __tact_context_get_sender INLINECALLDICT
+      19 s() PUSH
+      SDEQ
+      THROWANYIFNOT
+      17 s() 19 s() XCHG
+      16 s() 18 s() XCHG
       s15 17 s() XCHG
       s14 16 s() XCHG
       s13 s15 XCHG
@@ -1478,54 +1606,194 @@ PROGRAM{
       $SettlementMaster$_contract_store INLINECALLDICT
     }>
     OVER
-    2068563096 PUSHINT
+    3248553986 PUSHINT
     EQUAL
     IFJMP:<{
       NIP
-      18 s() POP
-      s0 17 s() XCHG
-      8 LDU
+      LDMSGADDR
+      LDVARUINT16
+      64 LDU
+      64 LDU
+      LDREF
       DROP
-      63399 PUSHINT
+      7212 PUSHINT
+      24 s() PUSH
+      0 NEQINT
+      THROWANYIFNOT
+      59457 PUSHINT
+      s9 PUSH
+      NOT
+      THROWANYIFNOT
+      34480 PUSHINT
       __tact_context_get_sender INLINECALLDICT
-      17 s() PUSH
+      s6 PUSH
       SDEQ
       THROWANYIFNOT
-      40616 PUSHINT
-      OVER
+      13152 PUSHINT
+          NOW
+      s3 s(-1) PUXC
+      GREATER
+      THROWANYIFNOT
+      17091 PUSHINT
+      25 s() PUSH
+      257 PUSHINT
+      s5 PUSH
+      1 PUSHINT
+      __tact_dict_get_int_int INLINECALLDICT
+      ISNULL
+      THROWANYIFNOT
+      58387 PUSHINT
+      __tact_context_get INLINECALLDICT
+      $Context$_get_value INLINECALLDICT
+      150000000 PUSHINT
+      GEQ
+      THROWANYIFNOT
+      7189 PUSHINT
+      s4 PUSH
       0 GTINT
       THROWANYIFNOT
-      s15 17 s() XCHG
-      s14 16 s() XCHG
-      s13 s15 XCHG
-      s12 s14 XCHG
-      s11 s13 XCHG
-      s10 s12 XCHG
-      s9 s11 XCHG
-      s8 s10 XCHG
-      s7 s9 XCHG
-      s6 s8 XCHG
-      s5 s7 XCHG
-      s4 s6 XCHG
-      s3 s5 XCHG
-      s4 s3 s0 XCHG3
-      s1 s2 XCHG
-      $SettlementMaster$_contract_store INLINECALLDICT
-    }>
-    OVER
-    3570918315 PUSHINT
-    EQUAL
-    IFJMP:<{
-      NIP
-      s4 POP
-      s0 s3 XCHG
-      LDMSGADDR
+          NEWC
+      s5 PUSH
+          STSLICER
+          ENDC
+          CTOS
+      11 PUSHINT
+          SDSKIPFIRST
+      256 LDU
       DROP
-      63399 PUSHINT
-      __tact_context_get_sender INLINECALLDICT
-      17 s() PUSH
-      SDEQ
+          NEWC
+      256 STU
+      s4 s(-1) PUXC
+      64 STU
+      s3 s(-1) PUXC
+      64 STU
+      s1 s2 XCHG
+      64 STU
+          ENDC
+          CTOS
+          HASHSU
+      SWAP
+          CTOS
+      SWAP
+      48401 PUSHINT
+      s0 s2 XCHG
+      24 s() PUSH
+          CHKSIGNU
       THROWANYIFNOT
+      s0 22 s() XCHG
+      257 PUSHINT
+      23 s() PUSH
+      TRUE
+      1 PUSHINT
+      __tact_dict_set_int_int INLINECALLDICT
+      s10 s1 XCPU
+      ADD
+          B{b5ee9c72410101010024000043800000000000000000000000000000000000000000000000000000000000000000104aec829d} B>boc <s PUSHSLICE
+      s9 s(-1) PUXC
+      SDEQ
+      NOT
+      IF:<{
+        120000000 PUSHINT
+        2 PUSHINT
+        FALSE
+        FALSE
+        FALSE
+            NEWC
+        260734629 PUSHINT
+        SWAP
+        32 STU
+        s1 28 s() XCHG
+        64 STU
+        s0 s6 XCHG2
+            STVARUINT16
+        s6 PUSH
+            STSLICER
+        s0 s6 XCHG2
+            STSLICER
+        s1 25 s() XCHG
+            1 STI
+        10000000 PUSHINT
+            STVARUINT16
+        s1 s3 XCHG
+            1 STI
+            ENDC
+        s9 PUSH
+        s0 s4 XCHG
+        s2 24 s() XCHG
+        SWAP
+        $SendParameters$_constructor_to_value_mode_bounce_body INLINECALLDICT
+            NEWC
+            b{01} STSLICECONST  // store tag = $0 and ihr_disabled = true
+            1 STI               // store `bounce`
+            b{000} STSLICECONST // store bounced = false and src = addr_none
+            STSLICE             // store `to`
+            SWAP
+            STGRAMS             // store `value`
+            105 PUSHINT         // 1 + 4 + 4 + 64 + 32
+            STZEROES            // store currency_collection, ihr_fee, fwd_fee, created_lt and created_at
+            // → Stack state
+            // s0: Builder
+            // s1: `data`
+            // s2: `code`
+            // s3: `body`
+            // s4: `mode`
+            // Group 2: Placing the Builder after code and data, then checking those for nullability
+            s2 XCHG0
+            DUP2
+            ISNULL
+            SWAP
+            ISNULL
+            AND
+            // → Stack state
+            // s0: -1 (true) if `data` and `code` are both null, 0 (false) otherwise
+            // s1: `code`
+            // s2: `data`
+            // s3: Builder
+            // s4: `body`
+            // s5: `mode`
+            // Group 3: Left branch of the IFELSE, executed if s0 is -1 (true)
+            <{
+                DROP2 // drop `data` and `code`, since either of those is null
+                b{0} STSLICECONST
+            }> PUSHCONT
+            // Group 3: Right branch of the IFELSE, executed if s0 is 0 (false)
+            <{
+                // _ split_depth:(Maybe (## 5))
+                //   special:(Maybe TickTock)
+                //   code:(Maybe ^Cell)
+                //   data:(Maybe ^Cell)
+                //   library:(Maybe ^Cell)
+                // = StateInit;
+                ROT                // place message Builder on top
+                b{10} STSLICECONST // store Maybe = true, Either = false
+                // Start composing inlined StateInit
+                b{00} STSLICECONST // store split_depth and special first
+                STDICT             // store code
+                STDICT             // store data
+                b{0} STSLICECONST  // store library
+            }> PUSHCONT
+            // Group 3: IFELSE that does the branching shown above
+            IFELSE
+            // → Stack state
+            // s0: Builder
+            // s1: null or StateInit
+            // s2: `body`
+            // s3: `mode`
+            // Group 4: Finalizing the message
+            STDICT // store `body` as ref with an extra Maybe bit, since `body` might be null
+            ENDC
+            // → Stack state
+            // s0: Cell
+            // s1: `mode`
+            // Group 5: Sending the message, with `mode` on top
+            SWAP
+            SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
+      }>ELSE<{
+        22 s() POP
+        2DROP
+      }>
+      17 s() 19 s() XCHG
+      16 s() 18 s() XCHG
       s15 17 s() XCHG
       s14 16 s() XCHG
       s13 s15 XCHG
@@ -1534,12 +1802,7 @@ PROGRAM{
       s10 s12 XCHG
       s9 s11 XCHG
       s8 s10 XCHG
-      s7 s9 XCHG
-      s6 s8 XCHG
-      s5 s7 XCHG
-      s4 s6 XCHG
-      s4 s3 s5 XCHG3
-      s1 s2 XCHG
+      2 7 BLKSWAP
       $SettlementMaster$_contract_store INLINECALLDICT
     }>
     OVER
@@ -1547,17 +1810,17 @@ PROGRAM{
     EQUAL
     IFJMP:<{
       NIP
-      s9 POP
-      s9 POP
-      s9 POP
-      s0 s6 XCHG
+      s11 POP
+      s11 POP
+      s11 POP
+      s0 s8 XCHG
       8 LDU
       8 LDU
       8 LDU
       DROP
       63399 PUSHINT
       __tact_context_get_sender INLINECALLDICT
-      17 s() PUSH
+      19 s() PUSH
       SDEQ
       THROWANYIFNOT
       22722 PUSHINT
@@ -1571,12 +1834,14 @@ PROGRAM{
       s3 PUSH
       49 GTINT
       THROWANYIFNOT
+      17 s() 19 s() XCHG
+      16 s() 18 s() XCHG
       s15 17 s() XCHG
       s14 16 s() XCHG
       s13 s15 XCHG
-      s12 s14 XCHG
-      s11 s13 XCHG
-      s12 s11 s10 XCHG3
+      s14 s13 s12 XCHG3
+      s9 s11 XCHG
+      s8 s10 XCHG
       s7 s9 XCHG
       s6 s8 XCHG
       s5 s7 XCHG
@@ -1590,22 +1855,26 @@ PROGRAM{
     EQUAL
     IFJMP:<{
       NIP
-      s12 POP
-      s12 POP
-      s12 POP
-      s0 s9 XCHG
+      s14 POP
+      s14 POP
+      s14 POP
+      s0 s11 XCHG
       LDMSGADDR
       LDMSGADDR
       LDMSGADDR
       DROP
       63399 PUSHINT
       __tact_context_get_sender INLINECALLDICT
-      17 s() PUSH
+      19 s() PUSH
       SDEQ
       THROWANYIFNOT
-      s15 17 s() XCHG
-      s14 16 s() XCHG
-      s14 s13 s15 XCHG3
+      17 s() 19 s() XCHG
+      16 s() 18 s() XCHG
+      s0 17 s() XCHG
+      s2 16 s() XCHG
+      s1 s15 XCHG
+      s12 s14 XCHG
+      s11 s13 XCHG
       s10 s12 XCHG
       s9 s11 XCHG
       s8 s10 XCHG
@@ -1623,28 +1892,30 @@ PROGRAM{
     EQUAL
     IFJMP:<{
       NIP
-      s8 POP
-      s0 s7 XCHG
+      s10 POP
+      s0 s9 XCHG
       LDVARUINT16
       DROP
       63399 PUSHINT
       __tact_context_get_sender INLINECALLDICT
-      17 s() PUSH
+      19 s() PUSH
       SDEQ
       THROWANYIFNOT
       27818 PUSHINT
       OVER
       0 GTINT
       THROWANYIFNOT
+      17 s() 19 s() XCHG
+      16 s() 18 s() XCHG
       s15 17 s() XCHG
       s14 16 s() XCHG
       s13 s15 XCHG
       s12 s14 XCHG
       s11 s13 XCHG
       s10 s12 XCHG
-      s9 s11 XCHG
+      s0 s11 XCHG
       s8 s10 XCHG
-      s0 s9 XCHG
+      s7 s9 XCHG
       s6 s8 XCHG
       s5 s7 XCHG
       s4 s6 XCHG
@@ -1658,14 +1929,17 @@ PROGRAM{
     EQUAL
     IFJMP:<{
       NIP
-      1 2 BLKDROP2
+      s4 POP
+      s0 s3 XCHG
       1 LDI
       DROP
       63399 PUSHINT
       __tact_context_get_sender INLINECALLDICT
-      17 s() PUSH
+      19 s() PUSH
       SDEQ
       THROWANYIFNOT
+      17 s() 19 s() XCHG
+      16 s() 18 s() XCHG
       s15 17 s() XCHG
       s14 16 s() XCHG
       s13 s15 XCHG
@@ -1678,8 +1952,8 @@ PROGRAM{
       s6 s8 XCHG
       s5 s7 XCHG
       s4 s6 XCHG
-      s3 s5 XCHG
-      s1 s4 s3 XCHG3
+      s4 s3 s5 XCHG3
+      s1 s2 XCHG
       $SettlementMaster$_contract_store INLINECALLDICT
     }>
     SWAP
@@ -1691,6 +1965,8 @@ PROGRAM{
       $DeployOk$_constructor_queryId INLINECALLDICT
       NEWC
       $DeployOk$_store_cell INLINECALLDICT
+      18 s() 20 s() XCHG
+      17 s() 19 s() XCHG
       16 s() 18 s() XCHG
       s15 17 s() XCHG
       s14 16 s() XCHG
@@ -1711,7 +1987,7 @@ PROGRAM{
       $SettlementMaster$_contract_store INLINECALLDICT
     }>
     15 BLKDROP
-    4 BLKDROP
+    6 BLKDROP
     130 THROW
   }>
 }END>c

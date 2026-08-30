@@ -61,6 +61,22 @@ message SetOwnJettonWallet {
     wallet: Address; // SM's own GSTD jetton wallet (pre-funded by admin)
 }
 
+// ── User-initiated uptime claim ─────────────────────────────────────────────
+// Platform signs a voucher for a specific wallet+amount. User submits this
+// message directly from their own TON wallet, paying 0.15 TON for gas.
+// Signature covers SHA-256 of: wallet_hash_256 ++ amount_u64 ++ nonce_u64 ++ expiry_u64
+message(0xC1A10001) SetClaimVerifier {
+    pubkey: Int as uint256; // Ed25519 pubkey of the platform signer; 0 = disable
+}
+
+message(0xC1A10002) ClaimUptime {
+    wallet: Address;       // destination — must equal sender()
+    amount: Int as coins;  // GSTD nanotons to claim
+    nonce:  Int as uint64; // random, one-time-use
+    expiry: Int as uint64; // unix timestamp; claim rejected after this
+    sigCell: Cell;         // 512-bit Ed25519 signature (bits only, no refs)
+}
+
 // ── P2P settlement additions ────────────────────────────────────────────────
 // See docs/P2P_SETTLEMENT_RFC.md for the full design. Summary: instead of
 // trusting sender() (a single gateway wallet), these messages trust a quorum
@@ -141,6 +157,10 @@ contract SettlementMaster with Deployable, Ownable {
     attestorKeys: map<Int, Bool>; // Ed25519 pubkey (uint256) => authorized
     quorumThreshold: Int as uint8; // min distinct valid attestations required
 
+    // ── User-initiated uptime claim (signed voucher) ──────────────────
+    claimVerifierPubkey: Int as uint256; // Ed25519 pubkey; 0 = disabled
+    usedClaimNonces: map<Int, Bool>;     // replay protection
+
     init(
         owner: Address,
         gstdJetton: Address,
@@ -167,6 +187,7 @@ contract SettlementMaster with Deployable, Ownable {
         self.ownJettonWallet = newAddress(0, 0); // set via SetOwnJettonWallet after deploy
 
         self.quorumThreshold = 2; // default: 2-of-3 redundant execution
+        self.claimVerifierPubkey = 0; // disabled until SetClaimVerifier called
     }
 
     // ── DAO: Set gateway address ─────────────────────────────────────────
@@ -419,6 +440,61 @@ contract SettlementMaster with Deployable, Ownable {
     receive(msg: SetOwnJettonWallet) {
         require(sender() == self.owner, "Only DAO");
         self.ownJettonWallet = msg.wallet;
+    }
+
+    // ── User-initiated uptime claim ──────────────────────────────────────
+    receive(msg: SetClaimVerifier) {
+        require(sender() == self.owner, "Owner only");
+        self.claimVerifierPubkey = msg.pubkey;
+    }
+
+    // User sends 0.15 TON with a platform-signed voucher → receives GSTD.
+    // Signature: Ed25519 over SHA-256(wallet_hash_256 ++ amount_u64 ++ nonce_u64 ++ expiry_u64)
+    receive(msg: ClaimUptime) {
+        require(self.claimVerifierPubkey != 0, "Claims disabled");
+        require(!self.paused, "Paused");
+        require(sender() == msg.wallet, "Wallet mismatch — send from wallet in voucher");
+        require(msg.expiry > now(), "Voucher expired");
+        require(self.usedClaimNonces.get(msg.nonce) == null, "Nonce already used");
+        require(context().value >= ton("0.15"), "Attach 0.15 TON");
+        require(msg.amount > 0, "Zero amount");
+
+        // Rebuild the 56-byte signed message: walletHash(32) ++ amount(8) ++ nonce(8) ++ expiry(8)
+        let addrBits: Slice = beginCell().storeAddress(msg.wallet).endCell().beginParse();
+        addrBits.skipBits(11); // 2 type + 1 anycast + 8 workchain
+        let walletHash: Int = addrBits.loadUint(256);
+
+        let sigHash: Int = beginCell()
+            .storeUint(walletHash, 256)
+            .storeUint(msg.amount, 64)
+            .storeUint(msg.nonce, 64)
+            .storeUint(msg.expiry, 64)
+            .endCell().beginParse().hash(); // slice_hash = SHA-256 of raw 448 bits
+
+        let sigSlice: Slice = msg.sigCell.beginParse();
+        require(checkSignature(sigHash, sigSlice, self.claimVerifierPubkey), "Invalid signature");
+
+        self.usedClaimNonces.set(msg.nonce, true);
+        self.totalGSTDMinted += msg.amount;
+
+        if (self.ownJettonWallet != newAddress(0, 0)) {
+            send(SendParameters {
+                to: self.ownJettonWallet,
+                value: ton("0.12"),
+                mode: SendIgnoreErrors,
+                bounce: false,
+                body: beginCell()
+                    .storeUint(0xf8a7ea5, 32)       // TEP-74 Transfer opcode
+                    .storeUint(msg.nonce, 64)         // queryId = nonce (unique per claim)
+                    .storeCoins(msg.amount)
+                    .storeAddress(msg.wallet)
+                    .storeAddress(msg.wallet)
+                    .storeBit(false)
+                    .storeCoins(ton("0.01"))
+                    .storeBit(false)
+                    .endCell(),
+            });
+        }
     }
 
     // ── DAO Governance: Update revenue split ────────────────────────────

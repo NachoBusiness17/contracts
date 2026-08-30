@@ -9,18 +9,31 @@
     "GSTDJetton": "EQDv6cYW9nNiKjN3Nwl8D6ABjUiH1gYfWVGZhfP7-9tZskTO",
     "EcosystemTreasury": "EQAbtTCsty8-gpX-45eotGWxnYG1c7ew7NFsZ9LJBRiv_Ii_",
     "SettlementMaster": "EQAhuR_cEaIkRqs4gvgXSD-Qw2FRUkkBUZQkTBrFT5n-ZrSS",
-    "Escrow": "EQDqdyFsruwXzlScIVM0c7LKbBb4EOgwLeFO4bpNnuwc7rTF"
+    "Escrow": "EQDqdyFsruwXzlScIVM0c7LKbBb4EOgwLeFO4bpNnuwc7rTF",
+    "SettlementMasterV2": "EQCi-QjafvcYE7wgl9Dc5jAFJrmiy_oGfcobzORb2gZQezhE"
+  },
+  "_escrow_note": "The Escrow address above is the Phase 1 deployment. README.md's 'Deployed Contracts' table lists a different, newer Escrow address (EQCucUHZGCr8KwBalmumsITvtMBtc5ZylAfw7sJk5SXpBWVh) — both still have live code on-chain as of 2026-08-13, but README's is the current canonical one. This file was never updated after that redeployment.",
+  "phase2_completed": {
+    "note": "Verified on-chain 2026-08-13 (real code + tx history at each address).",
+    "DAOVoting": "EQBa-hyO3JkcRJNyYKKOqBjsQ6KAS-dAHj6rf8KOuH4Jzls5",
+    "AgentRegistry": "EQDtWcGCQXLFdh7TmkL5QFbFNYXxL9mjOk4ehmsNFwCtsDoT"
   },
   "phase2_todo": [
-    "Deploy DAOVoting",
-    "Deploy AgentRegistry",
-    "Transfer SettlementMaster.owner to DAOVoting",
-    "Transfer EcosystemTreasury.owner to DAOVoting",
-    "Deploy TreasuryGold + wire DEX swap integration"
+    "Transfer SettlementMaster.owner to DAOVoting — BLOCKED on the old DAOVoting (quorum ~10,000 TON, unreachable). DAOVotingV2.tact fixes this (20 TON default quorum, plus a second, independently-discovered proposal-address-resolution bug) and is code-complete + tested (tests/DAOVotingV2.spec.ts, 3/3 passing) as of 2026-08-16, but NOT deployed. Deploy DAOVotingV2 and re-point this transfer at it, not the old DAOVoting.",
+    "Transfer EcosystemTreasury.owner to DAOVoting — same, re-point at DAOVotingV2 once deployed",
+    "Deploy AgentRegistryV2 — same address-resolution bug class as DAOVoting v1 (UpdateReputation silently no-op'd because the node-lookup path recomputed a NodeIdentity address from placeholder args instead of the real ones). Code-complete + tested (tests/AgentRegistryV2.spec.ts, 2/2 passing) as of 2026-08-16, NOT deployed.",
+    "Deploy TreasuryGold + wire the swap addresses — the swap logic itself is now real and tested (tests/TreasuryGold.spec.ts, 4/4 passing, 2026-08-16), using STON.fi v2.1's actual SWAP opcode (0x6664de2a) and pTON v2.1's actual TON_TRANSFER opcode (0x01f3835d), sourced directly from github.com/ston-fi/sdk (not guessed -- the Tact cookbook's own STON.fi page is an empty stub, tact-lang/tact-docs#149 still open). Gold-reserve accounting now only moves on a real TEP-74 TransferNotification from a verified own-wallet address, not a self-reported claim. Still needs, before deploy: (1) the real mainnet addresses for STON.fi's v2.1 router, the XAUt/pTON jetton masters, and this contract's own computed jetton-wallet addresses for both (SetPtonMaster/SetOwnXautJettonWallet/SetOwnPtonJettonWallet/SetRouterXautWallet), all off-chain-computed and wired in post-deploy same as SettlementMaster's SetOwnJettonWallet; (2) a testnet dry run of one real swap before any mainnet TON is routed through it, since this has never executed against a live router."
   ],
   "phase3_todo": [
     "Deploy GstdBridge (implement swap-in first)",
     "Deploy ProviderRegistry (fix Jetton integration first)",
     "Deploy SlashMechanics (fix message type mismatch first)"
-  ]
+  ],
+  "_settlement_v2_note": "Deployed 2026-08-13T20:43:20.158Z via TON Connect (signed by 0:a45c594d46cb9b529ed487b960fd2714a8b0a27dfd5008bb1d414d1aee4a61a9, no mnemonic used). Supports SettleTaskWithProof/SettleBatch (quorum-attested P2P settlement, default quorumThreshold=2-of-3). Old SettlementMaster (EQAhuR_cEaIkRqs4gvgXSD-Qw2FRUkkBUZQkTBrFT5n-ZrSS) abandoned in place — held no GSTD, ~0.1 TON at migration time.",
+  "bonus_pool": {
+    "note": "GSTD bonus pool funded 2026-08-14 via TON Connect (same signer as deploy). ownJettonWallet computed and set via SetOwnJettonWallet; balance verified on-chain via get_wallet_data() after funding.",
+    "ownJettonWallet": "EQAmshP8GtzzSNgb3XwcjtuNivbg4eiuvCt91zQ07mXj-lUH",
+    "fundedAmountGstd": 499,
+    "verifiedBalanceGstd": 499
+  }
 }

@@ -14,7 +14,7 @@
  *   TON_API_KEY          — toncenter API key
  *
  * Optional:
- *   PLATFORM_API         — defaults to https://app.gstdtoken.com/api/v1
+ *   PLATFORM_API         — defaults to https://platform.gstdtoken.com/api/v1
  *   MIN_SETTLE_GSTD      — min per-wallet threshold, defaults to 0.01
  */
 

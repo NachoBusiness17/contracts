@@ -90,7 +90,7 @@ async function main() {
             const workerAddr = Address.parse(entry.wallet);
             await settlement.send(
                 provider.sender(keyPair.secretKey),
-                { value: toNano('0.05') },
+                { value: toNano('0.15') },
                 {
                     $$type: 'SettleTask',
                     taskId,

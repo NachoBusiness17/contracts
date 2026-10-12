@@ -24,6 +24,8 @@ const V3S = Address.parse('EQDw9oXaR1lmwaVJdJFYA2heY11ktvdS0Jsdnee7Qqxur_g8');
 const NANO = BigInt('1000000000');
 const NODE_WALLETS: Record<string, string> = {
     'desktop-7c70ksc': 'UQBX4TEs0dCvV7CzDpUmj04niFPVd0jjbCfhquO8dPxxa3BJ',
+    'bob': 'UQAW3wO8TwzoBuOjA-XwCivj80eKhRzGAWl_PgkzUUUlbe5m',
+    't90': 'UQBrE6BRPvZkBH47rHGfL7TmepeakX--unodq9I_K6f7BA3p',
 };
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
@@ -60,6 +62,19 @@ async function walletGstd(client: TonClient, jetton: any, owner: Address): Promi
     const deployer = client.open(WalletContractV4.create({ publicKey: kp.publicKey, workchain: 0 }));
     const jetton = client.open(new GSTDJetton(V2J));
     const settlement = client.open(new SettlementMaster(V3S));
+
+    // MASTER-BALANCE GATE (2026-10-12, the drain-anomaly law): the bonus send
+    // burns 0.3 TON from the master's own balance; a starved master silently
+    // skips it (SendIgnoreErrors) while reputation still increments. Read the
+    // balance FRESH here - never trust a caller-supplied number (receipted: a
+    // stale 1.65 read fired a settle the master couldn't pay).
+    const masterBal = Number(await client.getBalance(V3S)) / 1e9;
+    console.log('master balance (fresh read):', masterBal, 'TON');
+    if (masterBal < 0.5) {
+        console.log('MASTER-BALANCE GATE: master has', masterBal, 'TON, needs >= 0.5.',
+            'Run scripts/fund-master-v6.ts first. Refusing to fire a settle whose bonus would be silently skipped.');
+        process.exit(3);
+    }
 
     const before = await walletGstd(client, jetton, worker);
     const taskId = BigInt('53001' + String(Date.now()).slice(-6));

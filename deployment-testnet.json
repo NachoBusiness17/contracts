@@ -1,0 +1,19 @@
+{
+  "network": "testnet",
+  "deployedAt": "2026-10-07T01:14:17.563Z",
+  "deployer": "EQAzwrijfvQn2xBL5YhZwf5GoBQaINAt6Nbd6LF67bFpuUiz",
+  "admin": "EQAzwrijfvQn2xBL5YhZwf5GoBQaINAt6Nbd6LF67bFpuUiz",
+  "contracts": {
+    "GSTDJetton": "EQCYVw1aOfsu8sj-C2LBeXjq-wscUuNG1nt6cuPomf8R1KPg",
+    "TreasuryGold": "EQAYhNIIPq85ND1D0RCEvaETD-Oz-WIjIbGAnCcLamD_opp6",
+    "DAOVoting": "EQDEHfYe8S6f8IRcLSrxcGgCUiilfnas09-FDYJQcMCvLhaF",
+    "SettlementMaster": "EQBRH9yC6trjOlLzOUuUIRJye7yxaEHf2diiDZQndncMekMw",
+    "AgentRegistry": "EQC1BmbbaUkTufXN6_ZiuvvYyCh8tlKdQELDsb5iZmByCzmO"
+  },
+  "pendingActions": [
+    "Transfer ownership of SettlementMaster to DAOVoting when DAO is ready",
+    "Transfer ownership of TreasuryGold to DAOVoting when DAO is ready",
+    "Update SettlementMaster.gateway to actual orchestrator address",
+    "Update SettlementMaster.protocolFee to buyback contract when deployed"
+  ]
+}

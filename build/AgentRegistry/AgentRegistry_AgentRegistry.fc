@@ -335,8 +335,8 @@ int $global_myBalance() impure asm """
 
 ((slice, slice, int, int, int, int, int, int, int, int, int, cell), slice) $AgentRegistry$_fun_owner((slice, slice, int, int, int, int, int, int, int, int, int, cell) $self) impure inline_ref {
     var (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes)) = $self;
-    var $fresh$ret_35 = $self'owner;
-    return (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes), $fresh$ret_35);
+    var $fresh$ret_36 = $self'owner;
+    return (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes), $fresh$ret_36);
 }
 
 ;; AgentRegistry_AgentRegistry.constants.fc
@@ -604,27 +604,27 @@ cell $NodeIdentity$_child_get_code() impure asm """
 
 ((slice, slice, int, int, int, int, int, int, int, int, int, cell), (int, int, int, int, int, int, int)) $AgentRegistry$_fun_get_network_stats((slice, slice, int, int, int, int, int, int, int, int, int, cell) $self) impure inline_ref {
     var (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes)) = $self;
-    var $fresh$ret_31 = $NetworkStats$_constructor_totalNodes_activeNodes_totalTasksCompleted_edgeCount_cpuCount_gpuCount_headCount($self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount);
-    return (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes), $fresh$ret_31);
+    var $fresh$ret_32 = $NetworkStats$_constructor_totalNodes_activeNodes_totalTasksCompleted_edgeCount_cpuCount_gpuCount_headCount($self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount);
+    return (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes), $fresh$ret_32);
 }
 
 ((slice, slice, int, int, int, int, int, int, int, int, int, cell), (int, int)) $AgentRegistry$_fun_get_genesis_manifest((slice, slice, int, int, int, int, int, int, int, int, int, cell) $self) impure inline_ref {
     var (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes)) = $self;
-    var $fresh$ret_32 = $GenesisManifestData$_constructor_version_manifestHash($self'genesisVersion, $self'genesisManifestHash);
-    return (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes), $fresh$ret_32);
+    var $fresh$ret_33 = $GenesisManifestData$_constructor_version_manifestHash($self'genesisVersion, $self'genesisManifestHash);
+    return (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes), $fresh$ret_33);
 }
 
 ((slice, slice, int, int, int, int, int, int, int, int, int, cell), slice) $AgentRegistry$_fun_getNodeAddress((slice, slice, int, int, int, int, int, int, int, int, int, cell) $self, int $nodeId) impure inline_ref {
     var (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes)) = $self;
     var ($nodeInit'code, $nodeInit'data) = $NodeIdentity$_init_child($nodeId, $global_myAddress(), __gen_slice_address_61ab4641fa30d9310391025086eec65d200d79268e1b7cd402565e01ba64be3c(), 0, 0, 0);
-    var $fresh$ret_34 = $global_contractAddress(($nodeInit'code, $nodeInit'data));
-    return (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes), $fresh$ret_34);
+    var $fresh$ret_35 = $global_contractAddress(($nodeInit'code, $nodeInit'data));
+    return (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes), $fresh$ret_35);
 }
 
 ((slice, slice, int, int, int, int, int, int, int, int, int, cell), slice) $AgentRegistry$_fun_get_node_address((slice, slice, int, int, int, int, int, int, int, int, int, cell) $self, int $nodeId) impure inline_ref {
     var (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes)) = $self;
-    var $fresh$ret_33 = ($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes)~$AgentRegistry$_fun_getNodeAddress($nodeId);
-    return (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes), $fresh$ret_33);
+    var $fresh$ret_34 = ($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes)~$AgentRegistry$_fun_getNodeAddress($nodeId);
+    return (($self'owner, $self'settlementContract, $self'totalNodes, $self'activeNodes, $self'totalTasksCompleted, $self'genesisVersion, $self'genesisManifestHash, $self'edgeCount, $self'cpuCount, $self'gpuCount, $self'headCount, $self'registeredNodes), $fresh$ret_34);
 }
 
 ;;

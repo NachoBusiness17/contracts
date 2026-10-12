@@ -325,19 +325,19 @@ builder $Proposal$_store(builder build_0, (int, slice, slice, slice, cell, int, 
 
 ((int, slice, slice, slice, cell, int, int, int, int, cell, int, int, int, int), (int, slice, slice, int, int, int, int, int, int, int, int, int)) $Proposal$_fun_get_proposal_data((int, slice, slice, slice, cell, int, int, int, int, cell, int, int, int, int) $self) impure inline_ref {
     var (($self'proposalId, $self'dao, $self'proposer, $self'targetContract, $self'payload, $self'votesFor, $self'votesAgainst, $self'voterCount, $self'quorumStake, $self'voters, $self'createdAt, $self'votingEndsAt, $self'executionUnlocksAt, $self'status)) = $self;
-    var $fresh$ret_40 = $ProposalData$_constructor_proposalId_proposer_targetContract_votesFor_votesAgainst_voterCount_totalStaked_quorumStake_createdAt_votingEndsAt_executionUnlocksAt_status($self'proposalId, $self'proposer, $self'targetContract, $self'votesFor, $self'votesAgainst, $self'voterCount, ($self'votesFor + $self'votesAgainst), $self'quorumStake, $self'createdAt, $self'votingEndsAt, $self'executionUnlocksAt, $self'status);
-    return (($self'proposalId, $self'dao, $self'proposer, $self'targetContract, $self'payload, $self'votesFor, $self'votesAgainst, $self'voterCount, $self'quorumStake, $self'voters, $self'createdAt, $self'votingEndsAt, $self'executionUnlocksAt, $self'status), $fresh$ret_40);
+    var $fresh$ret_41 = $ProposalData$_constructor_proposalId_proposer_targetContract_votesFor_votesAgainst_voterCount_totalStaked_quorumStake_createdAt_votingEndsAt_executionUnlocksAt_status($self'proposalId, $self'proposer, $self'targetContract, $self'votesFor, $self'votesAgainst, $self'voterCount, ($self'votesFor + $self'votesAgainst), $self'quorumStake, $self'createdAt, $self'votingEndsAt, $self'executionUnlocksAt, $self'status);
+    return (($self'proposalId, $self'dao, $self'proposer, $self'targetContract, $self'payload, $self'votesFor, $self'votesAgainst, $self'voterCount, $self'quorumStake, $self'voters, $self'createdAt, $self'votingEndsAt, $self'executionUnlocksAt, $self'status), $fresh$ret_41);
 }
 
 ((int, slice, slice, slice, cell, int, int, int, int, cell, int, int, int, int), int) $Proposal$_fun_get_voter_stake((int, slice, slice, slice, cell, int, int, int, int, cell, int, int, int, int) $self, slice $voter) impure inline_ref {
     var (($self'proposalId, $self'dao, $self'proposer, $self'targetContract, $self'payload, $self'votesFor, $self'votesAgainst, $self'voterCount, $self'quorumStake, $self'voters, $self'createdAt, $self'votingEndsAt, $self'executionUnlocksAt, $self'status)) = $self;
     int $stake = __tact_dict_get_slice_int($self'voters, 267, $voter, 257);
     if (null?($stake)) {
-        var $fresh$ret_41 = 0;
-        return (($self'proposalId, $self'dao, $self'proposer, $self'targetContract, $self'payload, $self'votesFor, $self'votesAgainst, $self'voterCount, $self'quorumStake, $self'voters, $self'createdAt, $self'votingEndsAt, $self'executionUnlocksAt, $self'status), $fresh$ret_41);
+        var $fresh$ret_42 = 0;
+        return (($self'proposalId, $self'dao, $self'proposer, $self'targetContract, $self'payload, $self'votesFor, $self'votesAgainst, $self'voterCount, $self'quorumStake, $self'voters, $self'createdAt, $self'votingEndsAt, $self'executionUnlocksAt, $self'status), $fresh$ret_42);
     }
-    var $fresh$ret_42 = $stake;
-    return (($self'proposalId, $self'dao, $self'proposer, $self'targetContract, $self'payload, $self'votesFor, $self'votesAgainst, $self'voterCount, $self'quorumStake, $self'voters, $self'createdAt, $self'votingEndsAt, $self'executionUnlocksAt, $self'status), $fresh$ret_42);
+    var $fresh$ret_43 = $stake;
+    return (($self'proposalId, $self'dao, $self'proposer, $self'targetContract, $self'payload, $self'votesFor, $self'votesAgainst, $self'voterCount, $self'quorumStake, $self'voters, $self'createdAt, $self'votingEndsAt, $self'executionUnlocksAt, $self'status), $fresh$ret_43);
 }
 
 ;;

@@ -288,8 +288,8 @@ int $global_myBalance() impure asm """
 
 ((slice, slice, int, int, int, int, int, int, int), slice) $DAOVoting$_fun_owner((slice, slice, int, int, int, int, int, int, int) $self) impure inline_ref {
     var (($self'owner, $self'gstdJetton, $self'quorumPercent, $self'timelockSeconds, $self'minProposalStake, $self'totalStakedGSTD, $self'proposalCount, $self'executedCount, $self'cancelledCount)) = $self;
-    var $fresh$ret_45 = $self'owner;
-    return (($self'owner, $self'gstdJetton, $self'quorumPercent, $self'timelockSeconds, $self'minProposalStake, $self'totalStakedGSTD, $self'proposalCount, $self'executedCount, $self'cancelledCount), $fresh$ret_45);
+    var $fresh$ret_46 = $self'owner;
+    return (($self'owner, $self'gstdJetton, $self'quorumPercent, $self'timelockSeconds, $self'minProposalStake, $self'totalStakedGSTD, $self'proposalCount, $self'executedCount, $self'cancelledCount), $fresh$ret_46);
 }
 
 ;; DAOVoting_DAOVoting.constants.fc
@@ -493,15 +493,15 @@ cell $Proposal$_child_get_code() impure asm """
 
 ((slice, slice, int, int, int, int, int, int, int), (int, int, int, int, int, int, int)) $DAOVoting$_fun_get_governance_stats((slice, slice, int, int, int, int, int, int, int) $self) impure inline_ref {
     var (($self'owner, $self'gstdJetton, $self'quorumPercent, $self'timelockSeconds, $self'minProposalStake, $self'totalStakedGSTD, $self'proposalCount, $self'executedCount, $self'cancelledCount)) = $self;
-    var $fresh$ret_43 = $GovernanceStats$_constructor_proposalCount_executedCount_cancelledCount_quorumPercent_timelockSeconds_minProposalStake_totalStakedGSTD($self'proposalCount, $self'executedCount, $self'cancelledCount, $self'quorumPercent, $self'timelockSeconds, $self'minProposalStake, $self'totalStakedGSTD);
-    return (($self'owner, $self'gstdJetton, $self'quorumPercent, $self'timelockSeconds, $self'minProposalStake, $self'totalStakedGSTD, $self'proposalCount, $self'executedCount, $self'cancelledCount), $fresh$ret_43);
+    var $fresh$ret_44 = $GovernanceStats$_constructor_proposalCount_executedCount_cancelledCount_quorumPercent_timelockSeconds_minProposalStake_totalStakedGSTD($self'proposalCount, $self'executedCount, $self'cancelledCount, $self'quorumPercent, $self'timelockSeconds, $self'minProposalStake, $self'totalStakedGSTD);
+    return (($self'owner, $self'gstdJetton, $self'quorumPercent, $self'timelockSeconds, $self'minProposalStake, $self'totalStakedGSTD, $self'proposalCount, $self'executedCount, $self'cancelledCount), $fresh$ret_44);
 }
 
 ((slice, slice, int, int, int, int, int, int, int), slice) $DAOVoting$_fun_get_proposal_address((slice, slice, int, int, int, int, int, int, int) $self, int $proposalId) impure inline_ref {
     var (($self'owner, $self'gstdJetton, $self'quorumPercent, $self'timelockSeconds, $self'minProposalStake, $self'totalStakedGSTD, $self'proposalCount, $self'executedCount, $self'cancelledCount)) = $self;
     var ($init'code, $init'data) = $Proposal$_init_child($proposalId, $global_myAddress(), __gen_slice_address_61ab4641fa30d9310391025086eec65d200d79268e1b7cd402565e01ba64be3c(), __gen_slice_address_61ab4641fa30d9310391025086eec65d200d79268e1b7cd402565e01ba64be3c(), $global_emptyCell(), 0, 0, 0);
-    var $fresh$ret_44 = $global_contractAddress(($init'code, $init'data));
-    return (($self'owner, $self'gstdJetton, $self'quorumPercent, $self'timelockSeconds, $self'minProposalStake, $self'totalStakedGSTD, $self'proposalCount, $self'executedCount, $self'cancelledCount), $fresh$ret_44);
+    var $fresh$ret_45 = $global_contractAddress(($init'code, $init'data));
+    return (($self'owner, $self'gstdJetton, $self'quorumPercent, $self'timelockSeconds, $self'minProposalStake, $self'totalStakedGSTD, $self'proposalCount, $self'executedCount, $self'cancelledCount), $fresh$ret_45);
 }
 
 ;;

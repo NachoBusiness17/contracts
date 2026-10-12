@@ -20,7 +20,7 @@ import { GSTDJettonWallet } from '../build/GSTDJetton/GSTDJetton_GSTDJettonWalle
 import { SettlementMaster } from '../build/SettlementMaster/SettlementMaster_SettlementMaster';
 
 const V2J = Address.parse('EQCgvt0MRmJPl-zQ8rZaPXpQnQgDQMQ_21plPSeYF4-zSAf0');
-const V3S = Address.parse('EQBaW5BqIePGNstaJI8ECwoTMju_e6Ta-4NNrAlwfScYnePI');
+const V3S = Address.parse('EQDw9oXaR1lmwaVJdJFYA2heY11ktvdS0Jsdnee7Qqxur_g8');
 const NANO = BigInt('1000000000');
 const NODE_WALLETS: Record<string, string> = {
     'desktop-7c70ksc': 'UQBX4TEs0dCvV7CzDpUmj04niFPVd0jjbCfhquO8dPxxa3BJ',
@@ -63,14 +63,24 @@ async function walletGstd(client: TonClient, jetton: any, owner: Address): Promi
 
     const before = await walletGstd(client, jetton, worker);
     const taskId = BigInt('53001' + String(Date.now()).slice(-6));
+
+    // Reputation-gated quality (Phase 4 babystep 3): the settle's qualityScore
+    // reads the worker's on-chain reputation from the master and adds up to
+    // +250 pts (25 per settled task, capped at 10 tasks) on top of the run's
+    // consensus-correct rate. Reputation is earned on-chain, read on-chain.
+    let reputation = 0;
+    try { reputation = Number(await settlement.getWorkerReputation(worker)); } catch { reputation = 0; }
+    const base = Math.round(parseFloat(correct) * 10000);
+    const qualityScore = Math.min(10000, base + Math.min(reputation, 10) * 25);
     console.log('verdict certified - settling', runId, '| worker:', nodeId, '| taskId:', taskId.toString());
+    console.log('reputation read:', reputation, '| qualityScore:', qualityScore, '(base', base, '+ reputation bonus', Math.min(reputation, 10) * 25 + ')');
 
     await settlement.send(deployer.sender(kp.secretKey), { value: toNano('0.2') }, {
         $$type: 'SettleTask',
         taskId,
         workerAddr: worker,
         gstdBonusAmount: BigInt('25') * NANO,
-        qualityScore: BigInt(Math.round(parseFloat(correct) * 10000)),
+        qualityScore: BigInt(qualityScore),
         computeUnits: BigInt('25'),
     });
 

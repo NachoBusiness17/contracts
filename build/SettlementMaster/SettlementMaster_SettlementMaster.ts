@@ -1310,6 +1310,53 @@ export function dictValueParserSetGateway(): DictionaryValue<SetGateway> {
     }
 }
 
+export type SetOwnJettonWallet = {
+    $$type: 'SetOwnJettonWallet';
+    wallet: Address;
+}
+
+export function storeSetOwnJettonWallet(src: SetOwnJettonWallet) {
+    return (builder: Builder) => {
+        const b_0 = builder;
+        b_0.storeUint(3570918315, 32);
+        b_0.storeAddress(src.wallet);
+    };
+}
+
+export function loadSetOwnJettonWallet(slice: Slice) {
+    const sc_0 = slice;
+    if (sc_0.loadUint(32) !== 3570918315) { throw Error('Invalid prefix'); }
+    const _wallet = sc_0.loadAddress();
+    return { $$type: 'SetOwnJettonWallet' as const, wallet: _wallet };
+}
+
+export function loadTupleSetOwnJettonWallet(source: TupleReader) {
+    const _wallet = source.readAddress();
+    return { $$type: 'SetOwnJettonWallet' as const, wallet: _wallet };
+}
+
+export function loadGetterTupleSetOwnJettonWallet(source: TupleReader) {
+    const _wallet = source.readAddress();
+    return { $$type: 'SetOwnJettonWallet' as const, wallet: _wallet };
+}
+
+export function storeTupleSetOwnJettonWallet(source: SetOwnJettonWallet) {
+    const builder = new TupleBuilder();
+    builder.writeAddress(source.wallet);
+    return builder.build();
+}
+
+export function dictValueParserSetOwnJettonWallet(): DictionaryValue<SetOwnJettonWallet> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeSetOwnJettonWallet(src)).endCell());
+        },
+        parse: (src) => {
+            return loadSetOwnJettonWallet(src.loadRef().beginParse());
+        }
+    }
+}
+
 export type SettlementMaster$Data = {
     $$type: 'SettlementMaster$Data';
     owner: Address;
@@ -1324,6 +1371,7 @@ export type SettlementMaster$Data = {
     totalSettled: bigint;
     totalGSTDMinted: bigint;
     taskCount: bigint;
+    ownJettonWallet: Address;
     settledTasks: Dictionary<bigint, boolean>;
     paused: boolean;
     minPayment: bigint;
@@ -1345,9 +1393,10 @@ export function storeSettlementMaster$Data(src: SettlementMaster$Data) {
         b_1.storeCoins(src.totalSettled);
         b_1.storeCoins(src.totalGSTDMinted);
         b_1.storeUint(src.taskCount, 64);
-        b_1.storeDict(src.settledTasks, Dictionary.Keys.BigInt(257), Dictionary.Values.Bool());
-        b_1.storeBit(src.paused);
         const b_2 = new Builder();
+        b_2.storeAddress(src.ownJettonWallet);
+        b_2.storeDict(src.settledTasks, Dictionary.Keys.BigInt(257), Dictionary.Values.Bool());
+        b_2.storeBit(src.paused);
         b_2.storeCoins(src.minPayment);
         b_1.storeRef(b_2.endCell());
         b_0.storeRef(b_1.endCell());
@@ -1369,11 +1418,12 @@ export function loadSettlementMaster$Data(slice: Slice) {
     const _totalSettled = sc_1.loadCoins();
     const _totalGSTDMinted = sc_1.loadCoins();
     const _taskCount = sc_1.loadUintBig(64);
-    const _settledTasks = Dictionary.load(Dictionary.Keys.BigInt(257), Dictionary.Values.Bool(), sc_1);
-    const _paused = sc_1.loadBit();
     const sc_2 = sc_1.loadRef().beginParse();
+    const _ownJettonWallet = sc_2.loadAddress();
+    const _settledTasks = Dictionary.load(Dictionary.Keys.BigInt(257), Dictionary.Values.Bool(), sc_2);
+    const _paused = sc_2.loadBit();
     const _minPayment = sc_2.loadCoins();
-    return { $$type: 'SettlementMaster$Data' as const, owner: _owner, gateway: _gateway, gstdJetton: _gstdJetton, treasury: _treasury, protocolFee: _protocolFee, workerShare: _workerShare, treasuryShare: _treasuryShare, protocolShare: _protocolShare, baseRate: _baseRate, totalSettled: _totalSettled, totalGSTDMinted: _totalGSTDMinted, taskCount: _taskCount, settledTasks: _settledTasks, paused: _paused, minPayment: _minPayment };
+    return { $$type: 'SettlementMaster$Data' as const, owner: _owner, gateway: _gateway, gstdJetton: _gstdJetton, treasury: _treasury, protocolFee: _protocolFee, workerShare: _workerShare, treasuryShare: _treasuryShare, protocolShare: _protocolShare, baseRate: _baseRate, totalSettled: _totalSettled, totalGSTDMinted: _totalGSTDMinted, taskCount: _taskCount, ownJettonWallet: _ownJettonWallet, settledTasks: _settledTasks, paused: _paused, minPayment: _minPayment };
 }
 
 export function loadTupleSettlementMaster$Data(source: TupleReader) {
@@ -1389,10 +1439,12 @@ export function loadTupleSettlementMaster$Data(source: TupleReader) {
     const _totalSettled = source.readBigNumber();
     const _totalGSTDMinted = source.readBigNumber();
     const _taskCount = source.readBigNumber();
+    const _ownJettonWallet = source.readAddress();
     const _settledTasks = Dictionary.loadDirect(Dictionary.Keys.BigInt(257), Dictionary.Values.Bool(), source.readCellOpt());
+    source = source.readTuple();
     const _paused = source.readBoolean();
     const _minPayment = source.readBigNumber();
-    return { $$type: 'SettlementMaster$Data' as const, owner: _owner, gateway: _gateway, gstdJetton: _gstdJetton, treasury: _treasury, protocolFee: _protocolFee, workerShare: _workerShare, treasuryShare: _treasuryShare, protocolShare: _protocolShare, baseRate: _baseRate, totalSettled: _totalSettled, totalGSTDMinted: _totalGSTDMinted, taskCount: _taskCount, settledTasks: _settledTasks, paused: _paused, minPayment: _minPayment };
+    return { $$type: 'SettlementMaster$Data' as const, owner: _owner, gateway: _gateway, gstdJetton: _gstdJetton, treasury: _treasury, protocolFee: _protocolFee, workerShare: _workerShare, treasuryShare: _treasuryShare, protocolShare: _protocolShare, baseRate: _baseRate, totalSettled: _totalSettled, totalGSTDMinted: _totalGSTDMinted, taskCount: _taskCount, ownJettonWallet: _ownJettonWallet, settledTasks: _settledTasks, paused: _paused, minPayment: _minPayment };
 }
 
 export function loadGetterTupleSettlementMaster$Data(source: TupleReader) {
@@ -1408,10 +1460,11 @@ export function loadGetterTupleSettlementMaster$Data(source: TupleReader) {
     const _totalSettled = source.readBigNumber();
     const _totalGSTDMinted = source.readBigNumber();
     const _taskCount = source.readBigNumber();
+    const _ownJettonWallet = source.readAddress();
     const _settledTasks = Dictionary.loadDirect(Dictionary.Keys.BigInt(257), Dictionary.Values.Bool(), source.readCellOpt());
     const _paused = source.readBoolean();
     const _minPayment = source.readBigNumber();
-    return { $$type: 'SettlementMaster$Data' as const, owner: _owner, gateway: _gateway, gstdJetton: _gstdJetton, treasury: _treasury, protocolFee: _protocolFee, workerShare: _workerShare, treasuryShare: _treasuryShare, protocolShare: _protocolShare, baseRate: _baseRate, totalSettled: _totalSettled, totalGSTDMinted: _totalGSTDMinted, taskCount: _taskCount, settledTasks: _settledTasks, paused: _paused, minPayment: _minPayment };
+    return { $$type: 'SettlementMaster$Data' as const, owner: _owner, gateway: _gateway, gstdJetton: _gstdJetton, treasury: _treasury, protocolFee: _protocolFee, workerShare: _workerShare, treasuryShare: _treasuryShare, protocolShare: _protocolShare, baseRate: _baseRate, totalSettled: _totalSettled, totalGSTDMinted: _totalGSTDMinted, taskCount: _taskCount, ownJettonWallet: _ownJettonWallet, settledTasks: _settledTasks, paused: _paused, minPayment: _minPayment };
 }
 
 export function storeTupleSettlementMaster$Data(source: SettlementMaster$Data) {
@@ -1428,6 +1481,7 @@ export function storeTupleSettlementMaster$Data(source: SettlementMaster$Data) {
     builder.writeNumber(source.totalSettled);
     builder.writeNumber(source.totalGSTDMinted);
     builder.writeNumber(source.taskCount);
+    builder.writeAddress(source.ownJettonWallet);
     builder.writeCell(source.settledTasks.size > 0 ? beginCell().storeDictDirect(source.settledTasks, Dictionary.Keys.BigInt(257), Dictionary.Values.Bool()).endCell() : null);
     builder.writeBoolean(source.paused);
     builder.writeNumber(source.minPayment);
@@ -1652,7 +1706,7 @@ function initSettlementMaster_init_args(src: SettlementMaster_init_args) {
 }
 
 async function SettlementMaster_init(owner: Address, gstdJetton: Address, treasury: Address, protocolFee: Address) {
-    const __code = Cell.fromHex('b5ee9c724102240100091a000114ff00f4a413f4bcf2c80b0102016202160130d001d072d721d200d200fa4021103450666f04f86102f8620303feed44d0d200018e2dfa40fa40fa40d401d0fa40fa40d307d307d307fa00fa00fa00d33ff404d200d430d0fa003010cf10ce10cd6c1f8e31fa40fa40fa40d401d0fa403014433004d155026d2480557a7582080f4240705300107c107b107a1079550770820afaf080e21110e3020ed70d1ff2e082218210a85e4bb4bae30221040708013c0e8020d7217021d749c21f9430d31f309131e2821059694c6ebae3025f0f0501f670804270882d553010246d50436d03c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0010ce551bc87f01ca0055e050efce1cce1ace08c8ce17ce15cb0713cb07cb0701fa0201fa0201fa0212cb3f12f40012ca00c85003fa0212cdcdc9ed5406003400000000626f756e6365645f776f726b65725f7061796d656e7400be313c0bfa40308200f7a7f8422ec705f2f410ce0d10ac109b108a10791068105710461035440302c87f01ca0055e050efce1cce1ace08c8ce17ce15cb0713cb07cb0701fa0201fa0201fa0212cb3f12f40012ca00c85003fa0212cdcdc9ed5403fe8210572e9ef8bae302218210beda40acbae302218210540bd399ba8e603139393906fa40fa40fa40308200f7a7f8422ec705f2f410ce10bd4bac1079106810571046134550c87f01ca0055e050efce1cce1ace08c8ce17ce15cb0713cb07cb0701fa0201fa0201fa0212cb3f12f40012ca00c85003fa0212cdcdc9ed54e02109111201fa31d33ffa40fa00d31f31d33f308200c4b1f8425612c705917f96f8425611c705e2f2f4820096d25612b3f2f4817e248d08600000000000000000000000000000000000000000000000000000000000000000045240c705b3f2f48200d4132581010126714133f40c6fa19401d70030925b6de26ef2f404810101247f710a01f4216e955b59f45a3098c801cf004133f442e2813f76f8416f24135f03821005f5e100bcf2f4f8416f24135f03821005f5e100a1812124215615bef2f4530ca88064a904531ca88064a9045321a121a12882103b9aca00bc9782103b9aca0039de52c9a8547550bc91309131e250b3a05192a008a47253727f08c80b03fe5520821059694c6e5004cb1f12cb3f01fa0201fa02c9270403507710246d50436d03c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb007270885611040c552010246d50436d03c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf818ae20c0d0e0016000000006465706f736974001a58cf8680cf8480f400f400cf8103c4f400c901fb007270882f0408552010246d50436d03c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0026c20092365be30d10ce10bd10ac109b108a10791068105710464055040f10150016000000006275796261636b00b4821007270e007250387005c855208210bb7a9ab85004cb1f12ce01fa02cb3fc92e484410246d50436d03c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0000ea3136363603d307d307d307308200f7a7f8422ec705f2f48158c25da022a0c064f2f48200b36d23c231f2f410ce10bd10ac109b108a4987104603054444c87f01ca0055e050efce1cce1ace08c8ce17ce15cb0713cb07cb0701fa0201fa0201fa0212cb3f12f40012ca00c85003fa0212cdcdc9ed5402f68210d70e7cefba8e66313504fa00308200f7a7f8422ec705f2f4816caa21c200f2f410ce10bd10ac109b108a1079106810570610354430c87f01ca0055e050efce1cce1ace08c8ce17ce15cb0713cb07cb0701fa0201fa0201fa0212cb3f12f40012ca00c85003fa0212cdcdc9ed54e02182103f7082c1bae30201131400c0313e0dd200308200f7a7f8422ec705f2f410ce10bd10ac109b108a10791068105710461035440302c87f01ca0055e050efce1cce1ace08c8ce17ce15cb0713cb07cb0701fa0201fa0201fa0212cb3f12f40012ca00c85003fa0212cdcdc9ed5401b88210946a98b6ba8eccd33f30c8018210aff90f5758cb1fcb3fc910df10ce10bd10ac109b108a107910681057104610354430f84270705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00e05f0f30f2c082150070c87f01ca0055e050efce1cce1ace08c8ce17ce15cb0713cb07cb0701fa0201fa0201fa0212cb3f12f40012ca00c85003fa0212cdcdc9ed54020120171f020120181a01dfb9197ed44d0d200018e2dfa40fa40fa40d401d0fa40fa40d307d307d307fa00fa00fa00d33ff404d200d430d0fa003010cf10ce10cd6c1f8e31fa40fa40fa40d401d0fa403014433004d155026d2480557a7582080f4240705300107c107b107a1079550770820afaf080e2db3c6cf48190008547543290201201b1d01dfb4a3bda89a1a400031c5bf481f481f481a803a1f481f481a60fa60fa60ff401f401f401a67fe809a401a861a1f40060219e219c219ad83f1c63f481f481f481a803a1f4806028866009a2aa04da4900aaf4eb04101e8480e0a60020f820f620f420f2aa0ee10415f5e101c5b678d9e301c00022e01dfb66f5da89a1a400031c5bf481f481f481a803a1f481f481a60fa60fa60ff401f401f401a67fe809a401a861a1f40060219e219c219ad83f1c63f481f481f481a803a1f4806028866009a2aa04da4900aaf4eb04101e8480e0a60020f820f620f420f2aa0ee10415f5e101c5b678d9e301e000221020148202201dfb5351da89a1a400031c5bf481f481f481a803a1f481f481a60fa60fa60ff401f401f401a67fe809a401a861a1f40060219e219c219ad83f1c63f481f481f481a803a1f4806028866009a2aa04da4900aaf4eb04101e8480e0a60020f820f620f420f2aa0ee10415f5e101c5b678d9e7021000654798701dfb5f37da89a1a400031c5bf481f481f481a803a1f481f481a60fa60fa60ff401f401f401a67fe809a401a861a1f40060219e219c219ad83f1c63f481f481f481a803a1f4806028866009a2aa04da4900aaf4eb04101e8480e0a60020f820f620f420f2aa0ee10415f5e101c5b678d9e9023000a547cba56113182a9d9');
+    const __code = Cell.fromHex('b5ee9c7241022701000a9c000114ff00f4a413f4bcf2c80b0102016202180130d001d072d721d200d200fa4021103450666f04f86102f8620303f4ed44d0d200018e64fa40fa40fa40d401d0fa403014433004d155026d2480557a7582080f424070530070820afaf0808d086000000000000000000000000000000000000000000000000000000000000000000410af10ae10ad10ac10ab109a10891078106710561045034444e30d1111e3020fd70d1ff2e08221250407013e0f8020d7217021d749c21f9430d31f309131e2821059694c6ebae3025f0f300501fe70804270882e553010246d50436d03c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0010df551cc87f01ca00111055e011101fce1dce1bce09c8ce18ce16cb0714cb0712cb0701fa0201fa0201fa02cb3f02c8ce13f40013ca005003fa02cdcdc9ed5406003400000000626f756e6365645f776f726b65725f7061796d656e7402fe8210a85e4bb4ba8e64313d0cfa40308200f7a7f8422fc705f2f410df0e10bd10ac109b108a107910681057104610354403c87f01ca00111055e011101fce1dce1bce09c8ce18ce16cb0714cb0712cb0701fa0201fa0201fa02cb3f02c8ce13f40013ca005003fa02cdcdc9ed54e0218210572e9ef8bae302218210d4d7e3ab081101fa31d33ffa40fa00d31f31d33f308200c4b1f8425613c705917f96f8425612c705e2f2f4820096d25613b3f2f4817e248d08600000000000000000000000000000000000000000000000000000000000000000045240c705b3f2f48200d4132581010126714133f40c6fa19401d70030925b6de26ef2f404810101247f710901f4216e955b59f45a3098c801cf004133f442e2813f76f8416f24135f03821005f5e100bcf2f4f8416f24135f03821005f5e100a1812124215616bef2f4530da88064a904531da88064a9045321a121a12882103b9aca00bc9782103b9aca0039de52d9a8547550bc91309131e250c3a051a2a009a47253727f08c80a03fe5520821059694c6e5004cb1f12cb3f01fa0201fa02c9270403507710246d50436d03c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb007270885612040d552010246d50436d03c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf818ae20b0c0d0016000000006465706f736974001a58cf8680cf8480f400f400cf8103fcf400c901fb0072708856100408552010246d50436d03c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0027c2008e298d08600000000000000000000000000000000000000000000000000000000000000000045250c705b39170e292375be30d10df0e0f100016000000006275796261636b00da821011e1a30072707070c88210558e297b01cb1f18cb3f500cfa0225cf165005cf1615ca008208989680fa0219ca00c925041039409910246d50436d03c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0000a010ce10bd10ac109b108a10791068105710364035c87f01ca00111055e011101fce1dce1bce09c8ce18ce16cb0714cb0712cb0701fa0201fa0201fa02cb3f02c8ce13f40013ca005003fa02cdcdc9ed5403fcba8e65316c12fa40308200f7a7f8422fc705f2f410df10ce10bd10ac109b108a107910681057104610354143c87f01ca00111055e011101fce1dce1bce09c8ce18ce16cb0714cb0712cb0701fa0201fa0201fa02cb3f02c8ce13f40013ca005003fa02cdcdc9ed54e0218210beda40acbae302218210540bd399bae3022112131400f43137373704d307d307d307308200f7a7f8422fc705f2f48158c25da022a0c064f2f48200b36d23c231f2f410df10ce10bd10ac109b4a9810571046034555c87f01ca00111055e011101fce1dce1bce09c8ce18ce16cb0714cb0712cb0701fa0201fa0201fa02cb3f02c8ce13f40013ca005003fa02cdcdc9ed5400ce313a3a3a07fa40fa40fa40308200f7a7f8422fc705f2f410df10ce4cbd108a107910681057104613154440c87f01ca00111055e011101fce1dce1bce09c8ce18ce16cb0714cb0712cb0701fa0201fa0201fa02cb3f02c8ce13f40013ca005003fa02cdcdc9ed5401fe8210d70e7cefba8e6d313605fa00308200f7a7f8422fc705f2f4816caa21c200f2f410df10ce10bd10ac109b108a107910680710461035443012c87f01ca00111055e011101fce1dce1bce09c8ce18ce16cb0714cb0712cb0701fa0201fa0201fa02cb3f02c8ce13f40013ca005003fa02cdcdc9ed54e02182103f7082c1ba1501f08e65313f0ed200308200f7a7f8422fc705f2f410df10ce10bd10ac109b108a107910681057104610354403c87f01ca00111055e011101fce1dce1bce09c8ce18ce16cb0714cb0712cb0701fa0201fa0201fa02cb3f02c8ce13f40013ca005003fa02cdcdc9ed54e0018210946a98b6bae3025f0f5bf2c0821601a2d33f30c8018210aff90f5758cb1fcb3fc90e11100e10df10ce10bd10ac109b108a10791068105710461035443012f84270705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00170078c87f01ca00111055e011101fce1dce1bce09c8ce18ce16cb0714cb0712cb0701fa0201fa0201fa02cb3f02c8ce13f40013ca005003fa02cdcdc9ed5402012019210201201a1c02edb9197ed44d0d200018e64fa40fa40fa40d401d0fa403014433004d155026d2480557a7582080f424070530070820afaf0808d086000000000000000000000000000000000000000000000000000000000000000000410af10ae10ad10ac10ab109a10891078106710561045034444e30ddb3c6cc46c448251b00085476542a0201201d1f02edb4a3bda89a1a400031cc9f481f481f481a803a1f4806028866009a2aa04da4900aaf4eb04101e8480e0a600e10415f5e1011a10c0000000000000000000000000000000000000000000000000000000000000000008215e215c215a215821562134211220f020ce20ac208a068889c61bb678ae20be1f0251e00022f02edb66f5da89a1a400031cc9f481f481f481a803a1f4806028866009a2aa04da4900aaf4eb04101e8480e0a600e10415f5e1011a10c0000000000000000000000000000000000000000000000000000000000000000008215e215c215a215821562134211220f020ce20ac208a068889c61bb678ae20be1f02520000221020148222402edb5351da89a1a400031cc9f481f481f481a803a1f4806028866009a2aa04da4900aaf4eb04101e8480e0a600e10415f5e1011a10c0000000000000000000000000000000000000000000000000000000000000000008215e215c215a215821562134211220f020ce20ac208a068889c61bb678d986d887025230006547a9802edb5f37da89a1a400031cc9f481f481f481a803a1f4806028866009a2aa04da4900aaf4eb04101e8480e0a600e10415f5e1011a10c0000000000000000000000000000000000000000000000000000000000000000008215e215c215a215821562134211220f020ce20ac208a068889c61bb678d988d889025260066fa40fa40fa40d401d0fa40fa40d307d307d307fa00fa00fa00d33fd430d0fa40f404d200fa00300d11100d10df10de5710550e000a547dcb56128ff2224c');
     const builder = beginCell();
     builder.storeUint(0, 1);
     initSettlementMaster_init_args({ $$type: 'SettlementMaster_init_args', owner, gstdJetton, treasury, protocolFee })(builder);
@@ -1782,7 +1836,8 @@ const SettlementMaster_types: ABIType[] = [
     {"name":"SetBaseRate","header":3608050927,"fields":[{"name":"rate","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"EmergencyPause","header":1064338113,"fields":[{"name":"paused","type":{"kind":"simple","type":"bool","optional":false}}]},
     {"name":"SetGateway","header":2824752052,"fields":[{"name":"gateway","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"SettlementMaster$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"gateway","type":{"kind":"simple","type":"address","optional":false}},{"name":"gstdJetton","type":{"kind":"simple","type":"address","optional":false}},{"name":"treasury","type":{"kind":"simple","type":"address","optional":false}},{"name":"protocolFee","type":{"kind":"simple","type":"address","optional":false}},{"name":"workerShare","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"treasuryShare","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"protocolShare","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"baseRate","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalSettled","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalGSTDMinted","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"taskCount","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"settledTasks","type":{"kind":"dict","key":"int","value":"bool"}},{"name":"paused","type":{"kind":"simple","type":"bool","optional":false}},{"name":"minPayment","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
+    {"name":"SetOwnJettonWallet","header":3570918315,"fields":[{"name":"wallet","type":{"kind":"simple","type":"address","optional":false}}]},
+    {"name":"SettlementMaster$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"gateway","type":{"kind":"simple","type":"address","optional":false}},{"name":"gstdJetton","type":{"kind":"simple","type":"address","optional":false}},{"name":"treasury","type":{"kind":"simple","type":"address","optional":false}},{"name":"protocolFee","type":{"kind":"simple","type":"address","optional":false}},{"name":"workerShare","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"treasuryShare","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"protocolShare","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"baseRate","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalSettled","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalGSTDMinted","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"taskCount","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"ownJettonWallet","type":{"kind":"simple","type":"address","optional":false}},{"name":"settledTasks","type":{"kind":"dict","key":"int","value":"bool"}},{"name":"paused","type":{"kind":"simple","type":"bool","optional":false}},{"name":"minPayment","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"SettlementStats","header":null,"fields":[{"name":"totalSettled","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"totalGSTDMinted","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"taskCount","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"baseRate","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"RevenueSplit","header":null,"fields":[{"name":"worker","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"treasury","type":{"kind":"simple","type":"uint","optional":false,"format":8}},{"name":"protocol","type":{"kind":"simple","type":"uint","optional":false,"format":8}}]},
     {"name":"ContractAddresses","header":null,"fields":[{"name":"gstdJetton","type":{"kind":"simple","type":"address","optional":false}},{"name":"treasury","type":{"kind":"simple","type":"address","optional":false}},{"name":"protocolFee","type":{"kind":"simple","type":"address","optional":false}},{"name":"owner","type":{"kind":"simple","type":"address","optional":false}}]},
@@ -1802,6 +1857,7 @@ const SettlementMaster_opcodes = {
     "SetBaseRate": 3608050927,
     "EmergencyPause": 1064338113,
     "SetGateway": 2824752052,
+    "SetOwnJettonWallet": 3570918315,
 }
 
 const SettlementMaster_getters: ABIGetter[] = [
@@ -1823,6 +1879,7 @@ export const SettlementMaster_getterMapping: { [key: string]: string } = {
 const SettlementMaster_receivers: ABIReceiver[] = [
     {"receiver":"internal","message":{"kind":"typed","type":"SetGateway"}},
     {"receiver":"internal","message":{"kind":"typed","type":"SettleTask"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"SetOwnJettonWallet"}},
     {"receiver":"internal","message":{"kind":"typed","type":"UpdateShares"}},
     {"receiver":"internal","message":{"kind":"typed","type":"UpdateAddresses"}},
     {"receiver":"internal","message":{"kind":"typed","type":"SetBaseRate"}},
@@ -1865,7 +1922,7 @@ export class SettlementMaster implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: SetGateway | SettleTask | UpdateShares | UpdateAddresses | SetBaseRate | EmergencyPause | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: SetGateway | SettleTask | SetOwnJettonWallet | UpdateShares | UpdateAddresses | SetBaseRate | EmergencyPause | Deploy) {
         
         let body: Cell | null = null;
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'SetGateway') {
@@ -1873,6 +1930,9 @@ export class SettlementMaster implements Contract {
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'SettleTask') {
             body = beginCell().store(storeSettleTask(message)).endCell();
+        }
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'SetOwnJettonWallet') {
+            body = beginCell().store(storeSetOwnJettonWallet(message)).endCell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'UpdateShares') {
             body = beginCell().store(storeUpdateShares(message)).endCell();

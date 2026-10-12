@@ -14,7 +14,7 @@
  *   TON_API_KEY          — toncenter API key
  *
  * Optional:
- *   PLATFORM_API         — defaults to https://app.gstdtoken.com/api/v1
+ *   (platform URLs are pinned literals in this script - no PLATFORM_API override)
  *   MIN_SETTLE_GSTD      — min per-wallet threshold, defaults to 0.01
  */
 
@@ -27,7 +27,9 @@ const MNEMONIC       = process.env.DEPLOYER_MNEMONIC || '';
 const SETTLE_ADDR    = process.env.SETTLEMENT_ADDRESS || '';
 const API_SECRET     = process.env.TREASURY_SECRET || '';
 const TON_API_KEY    = process.env.TON_API_KEY || '';
-const PLATFORM_API   = (process.env.PLATFORM_API || 'https://app.gstdtoken.com/api/v1').replace(/\/$/, '');
+// Platform URLs are pinned literals on purpose (Mimosa L3 2026-10-11): a
+// configurable base URL let an env var redirect settlement admin calls to any
+// host. Pinning removes that power entirely.
 const MIN_GSTD       = parseFloat(process.env.MIN_SETTLE_GSTD || '0.01');
 const NANO_FACTOR    = BigInt('1000000000');
 
@@ -57,7 +59,7 @@ async function main() {
 
     // Fetch pending rewards
     console.log('📡 Fetching pending rewards from platform...');
-    const resp = await fetch(`${PLATFORM_API}/settlement/pending`, {
+    const resp = await fetch('https://app.gstdtoken.com/api/v1/settlement/pending', {
         headers: { 'x-admin-secret': API_SECRET },
     });
     if (!resp.ok) {
@@ -113,7 +115,7 @@ async function main() {
     // Clear settled balances on platform
     if (settled.length > 0) {
         console.log(`\n📤 Clearing ${settled.length} settled balances on platform...`);
-        const clearResp = await fetch(`${PLATFORM_API}/settlement/clear`, {
+        const clearResp = await fetch('https://app.gstdtoken.com/api/v1/settlement/clear', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

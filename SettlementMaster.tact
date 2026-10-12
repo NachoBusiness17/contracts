@@ -107,7 +107,12 @@ contract SettlementMaster with Deployable, Ownable {
         self.treasuryShare = 10;
         self.protocolShare = 5;
 
-        self.baseRate = 1000000; // 0.001 GSTD per CU (nanoGSTD)
+        // baseRate init: 1 GSTD per CU. The shipped default (1,000,000 nano =
+        // 0.001 GSTD/CU) caps every real bonus to dust via maxAllowedBonus =
+        // baseRate * computeUnits: a 25 GSTD bonus with computeUnits 25 was
+        // silently cut to 0.025 GSTD (receipted on testnet 2026-10-11,
+        // fixed live via SetBaseRate on the perimeter deployment).
+        self.baseRate = 1000000000;
         self.totalSettled = 0;
         self.totalGSTDMinted = 0;
         self.taskCount = 0;
@@ -190,16 +195,28 @@ contract SettlementMaster with Deployable, Ownable {
         });
 
         // ── 4. Transfer GSTD bonus to worker from pre-funded pool ──────────
-        // Uses standard TEP-74 Jetton Transfer (opcode 0xf8a7ea5).
-        // Admin must pre-fund ownJettonWallet with GSTD before bonuses activate.
+        // Jetton Transfer with the opcode this repo's GSTDJettonWallet actually
+        // matches. Root cause 2026-10-11: the wallet's receive(msg: Transfer)
+        // compiles to tact's generated header 1435380091 (GSTDJettonWallet.abi),
+        // NOT the TEP-74 standard 0xf8a7ea5 (2507683173) - three settles hit the
+        // pool wallet and were silently ignored, out_msgs 0, funds retained.
+        // Upstream TEP-74 compliance fix: declare message(0xf8a7ea5) Transfer in
+        // GSTDJetton.tact (requires jetton migration); this in-place fix speaks
+        // the wallet's compiled dialect instead.
+        // Gas: 0.3 TON. Probe receipt 2026-10-11: 0.15 covers warm workers only -
+        // a NEVER-DEPLOYED worker jetton wallet needs deploy gas inside the
+        // TEP-74 transfer and 0.15 bounced it (probe-cold.ts, taskId
+        // 53001101600, wallet undeployed after 4 min). 0.3 gives the pool
+        // wallet room for transfer_internal + receiver state_init deploy +
+        // the 0.01 forward.
         if (actualBonus > 0 && self.ownJettonWallet != newAddress(0, 0)) {
             send(SendParameters {
                 to: self.ownJettonWallet,
-                value: ton("0.12"),
+                value: ton("0.3"),
                 mode: SendIgnoreErrors,
                 bounce: false,
                 body: beginCell()
-                    .storeUint(0xf8a7ea5, 32)      // Transfer opcode (TEP-74)
+                    .storeUint(1435380091, 32)     // Transfer opcode (tact header, matches GSTDJettonWallet.abi)
                     .storeUint(msg.taskId, 64)      // queryId
                     .storeCoins(actualBonus)         // amount
                     .storeAddress(msg.workerAddr)    // destination

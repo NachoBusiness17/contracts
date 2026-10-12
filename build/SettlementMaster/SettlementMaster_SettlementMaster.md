@@ -1,9 +1,9 @@
 # Tact compilation report
 Contract: SettlementMaster
-BoC Size: 2342 bytes
+BoC Size: 2728 bytes
 
 ## Structures (Structs and Messages)
-Total structures: 27
+Total structures: 28
 
 ### DataSize
 TL-B: `_ cells:int257 bits:int257 refs:int257 = DataSize`
@@ -97,9 +97,13 @@ Signature: `EmergencyPause{paused:bool}`
 TL-B: `set_gateway#a85e4bb4 gateway:address = SetGateway`
 Signature: `SetGateway{gateway:address}`
 
+### SetOwnJettonWallet
+TL-B: `set_own_jetton_wallet#d4d7e3ab wallet:address = SetOwnJettonWallet`
+Signature: `SetOwnJettonWallet{wallet:address}`
+
 ### SettlementMaster$Data
-TL-B: `_ owner:address gateway:address gstdJetton:address treasury:address protocolFee:address workerShare:uint8 treasuryShare:uint8 protocolShare:uint8 baseRate:coins totalSettled:coins totalGSTDMinted:coins taskCount:uint64 settledTasks:dict<int, bool> paused:bool minPayment:coins = SettlementMaster`
-Signature: `SettlementMaster{owner:address,gateway:address,gstdJetton:address,treasury:address,protocolFee:address,workerShare:uint8,treasuryShare:uint8,protocolShare:uint8,baseRate:coins,totalSettled:coins,totalGSTDMinted:coins,taskCount:uint64,settledTasks:dict<int, bool>,paused:bool,minPayment:coins}`
+TL-B: `_ owner:address gateway:address gstdJetton:address treasury:address protocolFee:address workerShare:uint8 treasuryShare:uint8 protocolShare:uint8 baseRate:coins totalSettled:coins totalGSTDMinted:coins taskCount:uint64 ownJettonWallet:address settledTasks:dict<int, bool> paused:bool minPayment:coins = SettlementMaster`
+Signature: `SettlementMaster{owner:address,gateway:address,gstdJetton:address,treasury:address,protocolFee:address,workerShare:uint8,treasuryShare:uint8,protocolShare:uint8,baseRate:coins,totalSettled:coins,totalGSTDMinted:coins,taskCount:uint64,ownJettonWallet:address,settledTasks:dict<int, bool>,paused:bool,minPayment:coins}`
 
 ### SettlementStats
 TL-B: `_ totalSettled:coins totalGSTDMinted:coins taskCount:uint64 baseRate:coins = SettlementStats`

@@ -47,6 +47,8 @@ async function probeOllama(host: string): Promise<{ ok: boolean; models: { name:
     console.log('master v6:', V6.toString());
     console.log('');
 
+    const latticeCells: Record<string, unknown> = {};
+
     for (const [name, cell] of Object.entries(CELLS)) {
         const hot = await probeOllama(cell.host);
         let ton = -1;
@@ -65,8 +67,26 @@ async function probeOllama(host: string): Promise<{ ok: boolean; models: { name:
             console.log('   models hot: unreachable on ' + cell.host + ' (this is data, not an error)');
         }
         console.log(`   TON: ${ton >= 0 ? ton : 'read failed'} | on-chain reputation: ${rep >= 0 ? rep : 0}`);
+        latticeCells[name] = { state, models: hot.models, ton, reputation: rep >= 0 ? rep : 0 };
         console.log('');
         await sleep(500);
     }
     console.log('lattice law: hot cells earn settlement; honest hot cells earn reputation; reputation gates the next launch.');
+
+    // snapshot for the MCP server (gstd_mcp.py serves this file; freshness = mtime)
+    try {
+        const stats = await settlement.getGetSettlementStats();
+        const snap = {
+            captured_at: new Date().toISOString(),
+            master: V6.toString(),
+            baseRate: stats.baseRate.toString(),
+            taskCount: stats.taskCount.toString(),
+            totalSettledTon: Number(stats.totalSettled) / 1e9,
+            cells: latticeCells,
+        };
+        require('fs').writeFileSync('lattice.json', JSON.stringify(snap, null, 2));
+        console.log('snapshot written: lattice.json');
+    } catch (e) {
+        console.log('snapshot write skipped:', String(e).slice(0, 120));
+    }
 })().catch(e => { console.error('ERR:', String(e).slice(0, 300)); process.exit(1); });

@@ -37,7 +37,7 @@ async function walletGstd(client: TonClient, jetton: any, owner: Address): Promi
 
     await settlement.send(deployer.sender(kp.secretKey), { value: toNano('0.2') }, {
         $$type: 'SettleTask',
-        taskId: BigInt('53001101611'),
+        taskId: BigInt('53001101613'),
         workerAddr: desktop,
         gstdBonusAmount: BigInt('25') * NANO,
         qualityScore: BigInt(9000),
@@ -46,8 +46,8 @@ async function walletGstd(client: TonClient, jetton: any, owner: Address): Promi
     console.log('SettleTask sent to v3 (taskId 53001101506, bonus 25 GSTD, CU 25)');
 
     let after = before;
-    for (let i = 0; i < 16; i++) {
-        await sleep(15000);
+    for (let i = 0; i < 40; i++) {
+        await sleep(15000); // 10 min window: testnet balance reads lag minutes behind committed state (receipted 2026-10-12)
         after = await walletGstd(client, jetton, desktop);
         console.log('  poll', i + 1, '- DESKTOP GSTD:', after);
         if (after > before) break;

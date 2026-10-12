@@ -21,7 +21,7 @@ const V6 = Address.parse('EQDw9oXaR1lmwaVJdJFYA2heY11ktvdS0Jsdnee7Qqxur_g8');
     await deployer.sendTransfer({
         secretKey: kp.secretKey,
         seqno,
-        messages: [internal({ to: V6, value: toNano('2'), body: undefined })],
+        messages: [internal({ to: V6, value: toNano('2'), body: undefined, bounce: false })],
     });
     console.log('funding sent: deployer seqno', seqno, '-> v6 master 2 TON (reserve: the 0.3 bonus gas is paid from the master balance, settles bleed it -0.2 each)');
     for (let i = 0; i < 8; i++) {

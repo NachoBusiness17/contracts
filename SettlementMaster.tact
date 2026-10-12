@@ -86,6 +86,7 @@ contract SettlementMaster with Deployable, Ownable {
 
     // ── Replay / double-settlement guard ─────────────────────────────────
     settledTasks: map<Int, Bool>; // taskId => true; prevents paying same task twice
+    workerReputation: map<Address, Int>; // worker address => settled task count (Phase 4 reputation, perimeter babystep 2)
 
     // ── Circuit breaker ─────────────────────────────────────────────────
     paused: Bool;
@@ -162,6 +163,16 @@ contract SettlementMaster with Deployable, Ownable {
         self.totalSettled += total;
         self.totalGSTDMinted += actualBonus;
         self.taskCount += 1;
+
+        // ── Reputation: per-worker settled-task count (Phase 4 babystep 2) ─
+        // Null-guard first-time workers: a bare !! on a missing row aborts
+        // the whole SettleTask (receipted: first probe after this change
+        // self-refunded until this guard landed).
+        let rep: Int = 0;
+        if (self.workerReputation.get(msg.workerAddr) != null) {
+            rep = self.workerReputation.get(msg.workerAddr)!!;
+        }
+        self.workerReputation.set(msg.workerAddr, rep + 1);
 
         // ── 1. Pay worker (85% TON) — bounce:true to recover on failure ─
         send(SendParameters {
@@ -290,6 +301,11 @@ contract SettlementMaster with Deployable, Ownable {
             taskCount: self.taskCount,
             baseRate: self.baseRate,
         };
+    }
+
+    // Phase 4 reputation: settled-task count per worker (perimeter babystep 2)
+    get fun worker_reputation(worker: Address): Int {
+        return self.workerReputation.get(worker)!!;
     }
 
     get fun get_revenue_split(): RevenueSplit {

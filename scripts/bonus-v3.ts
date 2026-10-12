@@ -10,7 +10,7 @@ import { GSTDJettonWallet } from '../build/GSTDJetton/GSTDJetton_GSTDJettonWalle
 import { SettlementMaster } from '../build/SettlementMaster/SettlementMaster_SettlementMaster';
 
 const V2J = Address.parse('EQCgvt0MRmJPl-zQ8rZaPXpQnQgDQMQ_21plPSeYF4-zSAf0');
-const V3S = Address.parse('EQBaW5BqIePGNstaJI8ECwoTMju_e6Ta-4NNrAlwfScYnePI');
+const V3S = Address.parse('EQDw9oXaR1lmwaVJdJFYA2heY11ktvdS0Jsdnee7Qqxur_g8');
 const NANO = BigInt('1000000000');
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
@@ -37,7 +37,7 @@ async function walletGstd(client: TonClient, jetton: any, owner: Address): Promi
 
     await settlement.send(deployer.sender(kp.secretKey), { value: toNano('0.2') }, {
         $$type: 'SettleTask',
-        taskId: BigInt('53001101506'),
+        taskId: BigInt('53001101611'),
         workerAddr: desktop,
         gstdBonusAmount: BigInt('25') * NANO,
         qualityScore: BigInt(9000),
@@ -55,4 +55,12 @@ async function walletGstd(client: TonClient, jetton: any, owner: Address): Promi
     console.log(after > before
         ? 'VERDICT: BONUS LEG PROVEN ON V3 - worker received ' + (after - before) + ' GSTD. The opcode fix works.'
         : 'VERDICT: bonus not visible after 4 min - pull v3 tx history next');
+
+    // Phase 4 reputation readback (perimeter babystep 2)
+    try {
+        const rep = await settlement.getWorkerReputation(desktop);
+        console.log('worker_reputation(DESKTOP):', rep.toString(), 'settled task(s)');
+    } catch (e) {
+        console.log('worker_reputation read: no row (or getter unreachable)');
+    }
 })().catch(e => { console.error('ERR:', String(e && e.message).slice(0, 200)); process.exit(1); });

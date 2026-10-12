@@ -9,7 +9,7 @@ import { GSTDJetton } from '../build/GSTDJetton/GSTDJetton_GSTDJetton';
 import { SettlementMaster } from '../build/SettlementMaster/SettlementMaster_SettlementMaster';
 
 const V2J = Address.parse('EQCgvt0MRmJPl-zQ8rZaPXpQnQgDQMQ_21plPSeYF4-zSAf0');
-const V4 = Address.parse('EQCsHsGiIpXjYqwweQ4uLNb82g1On85k1itZ2o_XGmTdAhDB');
+const V4 = Address.parse('EQDw9oXaR1lmwaVJdJFYA2heY11ktvdS0Jsdnee7Qqxur_g8');
 
 (async () => {
     const client = new TonClient({ endpoint: 'https://testnet.toncenter.com/api/v2/jsonRPC', apiKey: process.env.TON_API_KEY || '' });

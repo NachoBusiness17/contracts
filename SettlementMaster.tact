@@ -84,6 +84,11 @@ contract SettlementMaster with Deployable, Ownable {
     // SM's own GSTD jetton wallet — set by admin after deploy, pre-funded with reward pool
     ownJettonWallet: Address;
 
+    // ── Relay-skip observability (2026-10-13 amendment) ────────────────
+    // Count of bonuses deferred because the master's balance could not cover
+    // the 0.3 TON relay. Previously these vanished silently (SendIgnoreErrors).
+    deferredBonusCount: Int as uint32;
+
     // ── Replay / double-settlement guard ─────────────────────────────────
     settledTasks: map<Int, Bool>; // taskId => true; prevents paying same task twice
     workerReputation: map<Address, Int>; // worker address => settled task count (Phase 4 reputation, perimeter babystep 2)
@@ -121,6 +126,7 @@ contract SettlementMaster with Deployable, Ownable {
         self.paused = false;
         self.minPayment = ton("0.05"); // effective minimum payment after gas reserve (total = value - 0.1 TON gas)
         self.ownJettonWallet = newAddress(0, 0); // set via SetOwnJettonWallet after deploy
+        self.deferredBonusCount = 0;
     }
 
     // ── DAO: Set gateway address ─────────────────────────────────────────
@@ -220,7 +226,18 @@ contract SettlementMaster with Deployable, Ownable {
         // 53001101600, wallet undeployed after 4 min). 0.3 gives the pool
         // wallet room for transfer_internal + receiver state_init deploy +
         // the 0.01 forward.
-        if (actualBonus > 0 && self.ownJettonWallet != newAddress(0, 0)) {
+        // ── 2026-10-13 amendment (relay-skip root cause, closed) ───────────
+        // Scorecard receipt: settles at 03:20/04:18/04:34/10:30/11:20 on
+        // 2026-10-12 skipped this bonus relay deterministically - not
+        // intermittent. SendIgnoreErrors silently no-ops a send when the
+        // remaining balance cannot cover value + fees, so on a low master the
+        // bonus vanished with no trace. Fix: check myBalance() against the
+        // relay value plus a gas margin BEFORE sending. On insufficiency the
+        // bonus is deferred (not dropped): a BonusDeferred notice goes to the
+        // owner with the taskId, and deferredBonusCount rises. The skip is
+        // now an observable event and the pool top-up is attributable.
+        let relayGasNeeded: Int = ton("0.3") + ton("0.05"); // relay value + fee margin
+        if (actualBonus > 0 && self.ownJettonWallet != newAddress(0, 0) && myBalance() >= relayGasNeeded) {
             send(SendParameters {
                 to: self.ownJettonWallet,
                 value: ton("0.3"),
@@ -237,6 +254,19 @@ contract SettlementMaster with Deployable, Ownable {
                     .storeBit(false)                 // no forward payload
                     .endCell(),
             });
+        } else {
+            if (actualBonus > 0) {
+                // Deferred, not dropped: observable notice to the owner
+                // (the party who can refill the pool), plus a durable counter.
+                self.deferredBonusCount = self.deferredBonusCount + 1;
+                send(SendParameters {
+                    to: self.owner,
+                    value: ton("0.01"),
+                    mode: SendIgnoreErrors,
+                    bounce: false,
+                    body: "BonusDeferred".asComment(),
+                });
+            }
         }
     }
 
@@ -306,6 +336,12 @@ contract SettlementMaster with Deployable, Ownable {
     // Phase 4 reputation: settled-task count per worker (perimeter babystep 2)
     get fun worker_reputation(worker: Address): Int {
         return self.workerReputation.get(worker)!!;
+    }
+
+    // Relay-skip observability (2026-10-13 amendment): bonuses deferred for
+    // low master balance. Count > 0 means the pool needs a top-up.
+    get fun deferred_bonus_count(): Int {
+        return self.deferredBonusCount;
     }
 
     get fun get_revenue_split(): RevenueSplit {

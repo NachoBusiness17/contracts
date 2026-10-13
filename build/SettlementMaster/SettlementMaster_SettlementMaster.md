@@ -1,6 +1,6 @@
 # Tact compilation report
 Contract: SettlementMaster
-BoC Size: 2941 bytes
+BoC Size: 3309 bytes
 
 ## Structures (Structs and Messages)
 Total structures: 28
@@ -102,8 +102,8 @@ TL-B: `set_own_jetton_wallet#d4d7e3ab wallet:address = SetOwnJettonWallet`
 Signature: `SetOwnJettonWallet{wallet:address}`
 
 ### SettlementMaster$Data
-TL-B: `_ owner:address gateway:address gstdJetton:address treasury:address protocolFee:address workerShare:uint8 treasuryShare:uint8 protocolShare:uint8 baseRate:coins totalSettled:coins totalGSTDMinted:coins taskCount:uint64 ownJettonWallet:address settledTasks:dict<int, bool> workerReputation:dict<address, int> paused:bool minPayment:coins = SettlementMaster`
-Signature: `SettlementMaster{owner:address,gateway:address,gstdJetton:address,treasury:address,protocolFee:address,workerShare:uint8,treasuryShare:uint8,protocolShare:uint8,baseRate:coins,totalSettled:coins,totalGSTDMinted:coins,taskCount:uint64,ownJettonWallet:address,settledTasks:dict<int, bool>,workerReputation:dict<address, int>,paused:bool,minPayment:coins}`
+TL-B: `_ owner:address gateway:address gstdJetton:address treasury:address protocolFee:address workerShare:uint8 treasuryShare:uint8 protocolShare:uint8 baseRate:coins totalSettled:coins totalGSTDMinted:coins taskCount:uint64 ownJettonWallet:address deferredBonusCount:uint32 settledTasks:dict<int, bool> workerReputation:dict<address, int> paused:bool minPayment:coins = SettlementMaster`
+Signature: `SettlementMaster{owner:address,gateway:address,gstdJetton:address,treasury:address,protocolFee:address,workerShare:uint8,treasuryShare:uint8,protocolShare:uint8,baseRate:coins,totalSettled:coins,totalGSTDMinted:coins,taskCount:uint64,ownJettonWallet:address,deferredBonusCount:uint32,settledTasks:dict<int, bool>,workerReputation:dict<address, int>,paused:bool,minPayment:coins}`
 
 ### SettlementStats
 TL-B: `_ totalSettled:coins totalGSTDMinted:coins taskCount:uint64 baseRate:coins = SettlementStats`
@@ -118,13 +118,16 @@ TL-B: `_ gstdJetton:address treasury:address protocolFee:address owner:address =
 Signature: `ContractAddresses{gstdJetton:address,treasury:address,protocolFee:address,owner:address}`
 
 ## Get methods
-Total get methods: 6
+Total get methods: 7
 
 ## get_settlement_stats
 No arguments
 
 ## worker_reputation
 Argument: worker
+
+## deferred_bonus_count
+No arguments
 
 ## get_revenue_split
 No arguments

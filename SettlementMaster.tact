@@ -269,6 +269,9 @@ contract SettlementMaster with Deployable, Ownable {
             self.settledTasks.set(taskId, true);
             acceptedComputeUnits += computeUnits;
 
+            // A chain shorter than entryCount would silently re-parse the
+            // same entry — reject it instead of trusting the sender's count.
+            require(es.refs() > 0 || i == msg.entryCount - 1, "Malformed batch chain");
             if (es.refs() > 0) {
                 cursor = es.loadRef(); // link to next BatchEntry
             }
@@ -313,7 +316,7 @@ contract SettlementMaster with Deployable, Ownable {
             body: WorkerPayment {
                 taskId: taskId,
                 amount: workerAmt,
-                bonusGSTD: gstdBonusAmount,
+                bonusGSTD: actualBonus, // the capped amount actually paid — not the raw request
             }.toCell(),
         });
 
@@ -417,7 +420,7 @@ contract SettlementMaster with Deployable, Ownable {
 
     receive(msg: SetQuorumThreshold) {
         require(sender() == self.owner, "Only DAO");
-        require(msg.threshold >= 1, "Threshold must be at least 1");
+        require(msg.threshold >= 2, "Threshold must be at least 2 — a single attestor must never settle alone");
         self.quorumThreshold = msg.threshold;
     }
 

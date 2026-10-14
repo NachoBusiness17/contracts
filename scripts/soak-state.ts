@@ -61,12 +61,13 @@ const client = new TonClient({ endpoint: 'https://testnet.toncenter.com/api/v2/j
     if (mode === 'send') {
         const fromEnv = process.argv[3] || 'DEPLOYER_MNEMONIC';
         const amt = process.argv[4] || '1';
+        const dest = Address.parse(process.argv[5] || MASTER.toString());
         const kp = await mnemonicToPrivateKey((process.env[fromEnv] || '').trim().split(' '));
         const w = client.open(WalletContractV4.create({ publicKey: kp.publicKey, workchain: 0 }));
         const seqno = await w.getSeqno();
         await w.sendTransfer({
             seqno, secretKey: kp.secretKey,
-            messages: [internal({ to: MASTER, value: toNano(amt), bounce: false })],
+            messages: [internal({ to: dest, value: toNano(amt), bounce: false })],
         });
         console.log('SENT seqno', seqno);
         for (let i = 0; i < 10; i++) {

@@ -723,24 +723,24 @@ PROGRAM{
         __tact_dict_get_slice_int INLINECALLDICT
       }>
       267 PUSHINT
-      SWAP
+      OVER
       INC
-      s7 PUSH
-      s3 s10 XCHG
+      s8 PUSH
+      s3 s11 XCHG
       SWAP
       257 PUSHINT
       __tact_dict_set_slice_int INLINECALLDICT
       2 PUSHINT
-      s7 s2 PUSH2
+      s8 s3 PUSH2
       TRUE
-      s0 s8 XCHG
+      s0 s9 XCHG
       $WorkerPayment$_constructor_taskId_amount_bonusGSTD INLINECALLDICT
       NEWC
       $WorkerPayment$_store_cell INLINECALLDICT
-      s7 PUSH
+      s8 PUSH
       s0 s4 XCHG
-      s0 s3 XCHG
-      s7 s7 XCHG2
+      s3 s5 XCHG
+      s8 s8 XCHG2
       $SendParameters$_constructor_to_value_mode_bounce_body INLINECALLDICT
           NEWC
           b{01} STSLICECONST  // store tag = $0 and ihr_disabled = true
@@ -811,9 +811,9 @@ PROGRAM{
       2 PUSHINT
       FALSE
           B{b5ee9c7241010101000d000016000000006465706f736974b5adf9ec} B>boc PUSHREF
-      21 s() PUSH
+      22 s() PUSH
       s0 s4 XCHG
-      s0 16 s() XCHG
+      s0 17 s() XCHG
       3 -ROLL
       $SendParameters$_constructor_to_value_mode_bounce_body INLINECALLDICT
           NEWC
@@ -885,9 +885,9 @@ PROGRAM{
       2 PUSHINT
       FALSE
           B{b5ee9c7241010101000d000016000000006275796261636bc0ba973f} B>boc PUSHREF
-      19 s() PUSH
+      20 s() PUSH
       s0 s4 XCHG
-      s0 s9 XCHG
+      s0 s10 XCHG
       3 -ROLL
       $SendParameters$_constructor_to_value_mode_bounce_body INLINECALLDICT
           NEWC
@@ -956,12 +956,21 @@ PROGRAM{
           // Group 5: Sending the message, with `mode` on top
           SWAP
           SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
-      350000000 PUSHINT
-      s11 PUSH
+      s0 s4 XCHG
+      0 GTINT
+      IF:<{
+        150000000 PUSHINT
+      }>ELSE<{
+        300000000 PUSHINT
+      }>
+      DUP
+      50000000 PUSHINT
+      ADD
+      s6 PUSH
       0 GTINT
       IF:<{
             B{b5ee9c72410101010024000043800000000000000000000000000000000000000000000000000000000000000000104aec829d} B>boc <s PUSHSLICE
-        s9 s(-1) PUXC
+        s10 s(-1) PUXC
         SDEQ
         NOT
       }>ELSE<{
@@ -976,7 +985,6 @@ PROGRAM{
         FALSE
       }>
       IF:<{
-        300000000 PUSHINT
         2 PUSHINT
         FALSE
         FALSE
@@ -987,7 +995,7 @@ PROGRAM{
         32 STU
         s1 s8 XCHG
         64 STU
-        s0 s15 XCHG2
+        s0 s9 XCHG2
             STVARUINT16
         s5 PUSH
             STSLICER
@@ -997,13 +1005,13 @@ PROGRAM{
             1 STI
         10000000 PUSHINT
             STVARUINT16
-        s1 s12 XCHG
+        s1 s6 XCHG
             1 STI
             ENDC
         s8 PUSH
         s0 s4 XCHG
-        s3 s12 XCHG
-        s0 s12 s12 XCHG3
+        s3 s6 XCHG
+        s0 s6 s6 XCHG3
         $SendParameters$_constructor_to_value_mode_bounce_body INLINECALLDICT
             NEWC
             b{01} STSLICECONST  // store tag = $0 and ihr_disabled = true
@@ -1072,8 +1080,9 @@ PROGRAM{
             SWAP
             SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
       }>ELSE<{
-        2 1 BLKDROP2
-        s0 s8 XCHG
+        s1 s3 XCHG
+        3 BLKDROP
+        s0 s2 XCHG
         0 GTINT
         IF:<{
           s0 s3 XCHG
@@ -1165,8 +1174,10 @@ PROGRAM{
       s8 s10 XCHG
       s6 s9 XCHG
       s5 s8 XCHG
-      s0 s7 XCHG
-      2 5 BLKSWAP
+      s1 s7 XCHG
+      s4 s6 XCHG
+      s3 s5 XCHG
+      s1 s4 s3 XCHG3
       $SettlementMaster$_contract_store INLINECALLDICT
     }>
     OVER

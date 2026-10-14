@@ -266,11 +266,23 @@ contract SettlementMaster with Deployable, Ownable {
         // bonus is deferred (not dropped): a BonusDeferred notice goes to the
         // owner with the taskId, and deferredBonusCount rises. The skip is
         // now an observable event and the pool top-up is attributable.
-        let relayGasNeeded: Int = ton("0.3") + ton("0.05"); // relay value + fee margin
+        // ── 2026-10-14 amendment (two-tier relay gas) ───────────────────────
+        // The flat 0.3 TON relay made the master a one-way gas tank: 0.3 out
+        // per settle against 0.2 of settle revenue, so the float bled ~0.25
+        // per settle and the owner hand-fed it (receipted: 2 TON every few
+        // hours, master observed below band floor 2026-10-14). The 10-11
+        // probe already measured the split: 0.15 covers WARM workers (jetton
+        // wallet deployed); only a NEVER-DEPLOYED wallet needs the 0.3
+        // deploy gas. The reputation map (Phase 4) is the warm/cold signal
+        // and predates this amendment - rep 0 = cold, rep > 0 = warm.
+        // Master net per settle drops to ~-0.05 warm. Batching (one relay
+        // per N settles) is the next lever, client-side.
+        let relayValue: Int = rep > 0 ? ton("0.15") : ton("0.3");
+        let relayGasNeeded: Int = relayValue + ton("0.05"); // relay value + fee margin
         if (actualBonus > 0 && self.ownJettonWallet != newAddress(0, 0) && myBalance() >= relayGasNeeded) {
             send(SendParameters {
                 to: self.ownJettonWallet,
-                value: ton("0.3"),
+                value: relayValue,
                 mode: SendIgnoreErrors,
                 bounce: false,
                 body: beginCell()

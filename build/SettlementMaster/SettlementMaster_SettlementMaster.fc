@@ -768,9 +768,10 @@ _ %owner() method_id(83229) {
         $global_send($SendParameters$_constructor_to_value_mode_bounce_body($msg'workerAddr, $workerAmt, 2, true, $WorkerPayment$_store_cell($WorkerPayment$_constructor_taskId_amount_bonusGSTD($msg'taskId, $workerAmt, $msg'gstdBonusAmount), begin_cell())));
         $global_send($SendParameters$_constructor_to_value_mode_bounce_body($self'treasury, $treasuryAmt, 2, false, __gen_cell_cell_6c7f095b2834dcd10181b530fba875659e91af767b1d084243958c07bfe40df5()));
         $global_send($SendParameters$_constructor_to_value_mode_bounce_body($self'protocolFee, $protocolAmt, 2, false, __gen_cell_cell_a537636aa5fc3c2d44d23d8823f0a46ea660ebe768ba768596c3046cd297304b()));
-        int $relayGasNeeded = 350000000;
+        int $relayValue = (($rep > 0) ? 150000000 : 300000000);
+        int $relayGasNeeded = ($relayValue + 50000000);
         if (( (( (($actualBonus > 0)) ? (( ~ equal_slices_bits($self'ownJettonWallet, __gen_slice_address_61ab4641fa30d9310391025086eec65d200d79268e1b7cd402565e01ba64be3c()) )) : (false) )) ? (($global_myBalance() >= $relayGasNeeded)) : (false) )) {
-            $global_send($SendParameters$_constructor_to_value_mode_bounce_body($self'ownJettonWallet, 300000000, 2, false, $Builder$_fun_endCell($Builder$_fun_storeBit(false, $Builder$_fun_storeCoins($Builder$_fun_storeBit(false, $Builder$_fun_storeAddress($Builder$_fun_storeAddress($Builder$_fun_storeCoins(store_uint(store_uint($global_beginCell(), 1435380091, 32), $msg'taskId, 64), $actualBonus), $msg'workerAddr), $msg'workerAddr)), 10000000)))));
+            $global_send($SendParameters$_constructor_to_value_mode_bounce_body($self'ownJettonWallet, $relayValue, 2, false, $Builder$_fun_endCell($Builder$_fun_storeBit(false, $Builder$_fun_storeCoins($Builder$_fun_storeBit(false, $Builder$_fun_storeAddress($Builder$_fun_storeAddress($Builder$_fun_storeCoins(store_uint(store_uint($global_beginCell(), 1435380091, 32), $msg'taskId, 64), $actualBonus), $msg'workerAddr), $msg'workerAddr)), 10000000)))));
         } elseif (($actualBonus > 0)) {
             $self'deferredBonusCount = ($self'deferredBonusCount + 1);
             $global_send($SendParameters$_constructor_to_value_mode_bounce_body($self'owner, 10000000, 2, false, __gen_cell_cell_06ad2847a2365ab317625e68b9a16fc7522d8ba8e54b409ce324ba7f81bbca44()));

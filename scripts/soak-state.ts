@@ -70,8 +70,10 @@ const client = new TonClient({ endpoint: 'https://testnet.toncenter.com/api/v2/j
             messages: [internal({ to: dest, value: toNano(amt), bounce: false })],
         });
         console.log('SENT seqno', seqno);
-        for (let i = 0; i < 10; i++) {
-            await new Promise(r => setTimeout(r, 8000));
+        // testnet congestion backs the seqno up 2-4 min; poll long enough that
+        // an UNCONFIRMED verdict means genuinely stuck, not just slow
+        for (let i = 0; i < 24; i++) {
+            await new Promise(r => setTimeout(r, 10000));
             if (await w.getSeqno() > seqno) { console.log('REFILL_CONFIRMED'); return; }
         }
         console.log('REFILL_UNCONFIRMED');

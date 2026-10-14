@@ -1,9 +1,9 @@
 # Tact compilation report
 Contract: SettlementMaster
-BoC Size: 3309 bytes
+BoC Size: 3291 bytes
 
 ## Structures (Structs and Messages)
-Total structures: 28
+Total structures: 29
 
 ### DataSize
 TL-B: `_ cells:int257 bits:int257 refs:int257 = DataSize`
@@ -89,6 +89,10 @@ Signature: `MintWorkerReward{workerAddr:address,amount:coins,taskId:uint64}`
 TL-B: `set_base_rate#d70e7cef rate:coins = SetBaseRate`
 Signature: `SetBaseRate{rate:coins}`
 
+### SetMinMasterBalance
+TL-B: `set_min_master_balance#b6b9ab63 floor:coins = SetMinMasterBalance`
+Signature: `SetMinMasterBalance{floor:coins}`
+
 ### EmergencyPause
 TL-B: `emergency_pause#3f7082c1 paused:bool = EmergencyPause`
 Signature: `EmergencyPause{paused:bool}`
@@ -102,8 +106,8 @@ TL-B: `set_own_jetton_wallet#d4d7e3ab wallet:address = SetOwnJettonWallet`
 Signature: `SetOwnJettonWallet{wallet:address}`
 
 ### SettlementMaster$Data
-TL-B: `_ owner:address gateway:address gstdJetton:address treasury:address protocolFee:address workerShare:uint8 treasuryShare:uint8 protocolShare:uint8 baseRate:coins totalSettled:coins totalGSTDMinted:coins taskCount:uint64 ownJettonWallet:address deferredBonusCount:uint32 settledTasks:dict<int, bool> workerReputation:dict<address, int> paused:bool minPayment:coins = SettlementMaster`
-Signature: `SettlementMaster{owner:address,gateway:address,gstdJetton:address,treasury:address,protocolFee:address,workerShare:uint8,treasuryShare:uint8,protocolShare:uint8,baseRate:coins,totalSettled:coins,totalGSTDMinted:coins,taskCount:uint64,ownJettonWallet:address,deferredBonusCount:uint32,settledTasks:dict<int, bool>,workerReputation:dict<address, int>,paused:bool,minPayment:coins}`
+TL-B: `_ owner:address gateway:address gstdJetton:address treasury:address protocolFee:address workerShare:uint8 treasuryShare:uint8 protocolShare:uint8 baseRate:coins totalSettled:coins totalGSTDMinted:coins taskCount:uint64 ownJettonWallet:address deferredBonusCount:uint32 minMasterBalance:coins settledTasks:dict<int, bool> workerReputation:dict<address, int> paused:bool minPayment:coins = SettlementMaster`
+Signature: `SettlementMaster{owner:address,gateway:address,gstdJetton:address,treasury:address,protocolFee:address,workerShare:uint8,treasuryShare:uint8,protocolShare:uint8,baseRate:coins,totalSettled:coins,totalGSTDMinted:coins,taskCount:uint64,ownJettonWallet:address,deferredBonusCount:uint32,minMasterBalance:coins,settledTasks:dict<int, bool>,workerReputation:dict<address, int>,paused:bool,minPayment:coins}`
 
 ### SettlementStats
 TL-B: `_ totalSettled:coins totalGSTDMinted:coins taskCount:uint64 baseRate:coins = SettlementStats`
@@ -118,7 +122,7 @@ TL-B: `_ gstdJetton:address treasury:address protocolFee:address owner:address =
 Signature: `ContractAddresses{gstdJetton:address,treasury:address,protocolFee:address,owner:address}`
 
 ## Get methods
-Total get methods: 7
+Total get methods: 8
 
 ## get_settlement_stats
 No arguments
@@ -127,6 +131,9 @@ No arguments
 Argument: worker
 
 ## deferred_bonus_count
+No arguments
+
+## min_master_balance
 No arguments
 
 ## get_revenue_split
@@ -181,7 +188,9 @@ No arguments
 * 8484: Payment below minimum
 * 16246: Insufficient value for gas reserve
 * 22722: Must sum to 100
+* 24976: Master balance below band floor
 * 27818: Rate must be positive
+* 29560: Floor below relay reserve
 * 32292: Worker address cannot be zero
 * 38610: Settlement paused
 * 45933: Worker share minimum 50%

@@ -42,10 +42,10 @@ cell $WorkerPayment$_store_cell((int, int, int) v, builder b) inline;
 (slice, ((int, int))) $WorkerPayment$_load_bounced(slice sc_0) inline;
 
 ;; $SettlementMaster$_store
-builder $SettlementMaster$_store(builder build_0, (slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) v) inline;
+builder $SettlementMaster$_store(builder build_0, (slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) v) inline;
 
 ;; $SettlementMaster$_load
-(slice, ((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int))) $SettlementMaster$_load(slice sc_0) inline;
+(slice, ((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int))) $SettlementMaster$_load(slice sc_0) inline;
 
 ;; $Context$_get_value
 _ $Context$_get_value((int, slice, int, slice) v) inline;
@@ -63,49 +63,52 @@ _ $Context$_get_value((int, slice, int, slice) v) inline;
 (slice, ((slice, slice, slice, slice))) $SettlementMaster$init$_load(slice sc_0) inline;
 
 ;; $SettlementMaster$_contract_init
-(slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $SettlementMaster$_contract_init(slice $owner, slice $gstdJetton, slice $treasury, slice $protocolFee) impure inline;
+(slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $SettlementMaster$_contract_init(slice $owner, slice $gstdJetton, slice $treasury, slice $protocolFee) impure inline;
 
 ;; $SettlementMaster$_contract_load
-(slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $SettlementMaster$_contract_load() impure inline;
+(slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $SettlementMaster$_contract_load() impure inline;
 
 ;; $SettlementMaster$_contract_store
-() $SettlementMaster$_contract_store((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) v) impure inline;
+() $SettlementMaster$_contract_store((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) v) impure inline;
 
 ;; $SettlementStats$_constructor_totalSettled_totalGSTDMinted_taskCount_baseRate
 ((int, int, int, int)) $SettlementStats$_constructor_totalSettled_totalGSTDMinted_taskCount_baseRate(int $totalSettled, int $totalGSTDMinted, int $taskCount, int $baseRate) inline;
 
 ;; $SettlementMaster$_fun_get_settlement_stats
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), (int, int, int, int)) $SettlementMaster$_fun_get_settlement_stats((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), (int, int, int, int)) $SettlementMaster$_fun_get_settlement_stats((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref;
 
 ;; $SettlementMaster$_fun_worker_reputation
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), int) $SettlementMaster$_fun_worker_reputation((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self, slice $worker) impure inline_ref;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), int) $SettlementMaster$_fun_worker_reputation((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self, slice $worker) impure inline_ref;
 
 ;; $SettlementMaster$_fun_deferred_bonus_count
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), int) $SettlementMaster$_fun_deferred_bonus_count((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), int) $SettlementMaster$_fun_deferred_bonus_count((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref;
+
+;; $SettlementMaster$_fun_min_master_balance
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), int) $SettlementMaster$_fun_min_master_balance((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref;
 
 ;; $RevenueSplit$_constructor_worker_treasury_protocol
 ((int, int, int)) $RevenueSplit$_constructor_worker_treasury_protocol(int $worker, int $treasury, int $protocol) inline;
 
 ;; $SettlementMaster$_fun_get_revenue_split
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), (int, int, int)) $SettlementMaster$_fun_get_revenue_split((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), (int, int, int)) $SettlementMaster$_fun_get_revenue_split((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref;
 
 ;; $ContractAddresses$_constructor_gstdJetton_treasury_protocolFee_owner
 ((slice, slice, slice, slice)) $ContractAddresses$_constructor_gstdJetton_treasury_protocolFee_owner(slice $gstdJetton, slice $treasury, slice $protocolFee, slice $owner) inline;
 
 ;; $SettlementMaster$_fun_get_addresses
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), (slice, slice, slice, slice)) $SettlementMaster$_fun_get_addresses((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), (slice, slice, slice, slice)) $SettlementMaster$_fun_get_addresses((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref;
 
 ;; $SettlementMaster$_fun_is_paused
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), int) $SettlementMaster$_fun_is_paused((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), int) $SettlementMaster$_fun_is_paused((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref;
 
 ;; $MessageParameters$_constructor_bounce_to_value_mode_body
 ((int, cell, int, slice, int)) $MessageParameters$_constructor_bounce_to_value_mode_body(int $bounce, slice $to, int $value, int $mode, cell $body) inline;
 
 ;; $SettlementMaster$_fun_notify
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), ()) $SettlementMaster$_fun_notify((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self, cell $body) impure inline;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), ()) $SettlementMaster$_fun_notify((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self, cell $body) impure inline;
 
 ;; $SettlementMaster$_fun_owner
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), slice) $SettlementMaster$_fun_owner((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), slice) $SettlementMaster$_fun_owner((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref;
 
 ;; $SendParameters$_constructor_to_value_mode_bounce_body
 ((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_mode_bounce_body(slice $to, int $value, int $mode, int $bounce, cell $body) inline;
@@ -298,8 +301,8 @@ builder $Builder$_fun_storeAddress(builder $self, slice $address) impure asm """
     STSLICER
 """;
 
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), ()) $SettlementMaster$_fun_notify((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self, cell $body) impure inline {
-    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), ()) $SettlementMaster$_fun_notify((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self, cell $body) impure inline {
+    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
     slice $to = __tact_context_get_sender();
     int $bounce = false;
     if (false) {
@@ -308,17 +311,17 @@ builder $Builder$_fun_storeAddress(builder $self, slice $address) impure asm """
         if (($balanceBeforeMessage < 0)) {
             $global_nativeReserve(0, 0);
             $global_message($MessageParameters$_constructor_bounce_to_value_mode_body($bounce, $to, 0, 130, $body));
-            return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), ());
+            return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), ());
         }
     }
     $global_message($MessageParameters$_constructor_bounce_to_value_mode_body($bounce, $to, 0, 66, $body));
-    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), ());
+    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), ());
 }
 
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), slice) $SettlementMaster$_fun_owner((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
-    var $fresh$ret_22 = $self'owner;
-    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_22);
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), slice) $SettlementMaster$_fun_owner((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
+    var $fresh$ret_23 = $self'owner;
+    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_23);
 }
 
 ;; SettlementMaster_SettlementMaster.constants.fc
@@ -470,11 +473,11 @@ cell $WorkerPayment$_store_cell((int, int, int) v, builder b) inline {
 
 ;;
 ;; Type: SettlementMaster
-;; TLB: _ owner:address gateway:address gstdJetton:address treasury:address protocolFee:address workerShare:uint8 treasuryShare:uint8 protocolShare:uint8 baseRate:coins totalSettled:coins totalGSTDMinted:coins taskCount:uint64 ownJettonWallet:address deferredBonusCount:uint32 settledTasks:dict<int, bool> workerReputation:dict<address, int> paused:bool minPayment:coins = SettlementMaster
+;; TLB: _ owner:address gateway:address gstdJetton:address treasury:address protocolFee:address workerShare:uint8 treasuryShare:uint8 protocolShare:uint8 baseRate:coins totalSettled:coins totalGSTDMinted:coins taskCount:uint64 ownJettonWallet:address deferredBonusCount:uint32 minMasterBalance:coins settledTasks:dict<int, bool> workerReputation:dict<address, int> paused:bool minPayment:coins = SettlementMaster
 ;;
 
-builder $SettlementMaster$_store(builder build_0, (slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) v) inline {
-    var (v'owner, v'gateway, v'gstdJetton, v'treasury, v'protocolFee, v'workerShare, v'treasuryShare, v'protocolShare, v'baseRate, v'totalSettled, v'totalGSTDMinted, v'taskCount, v'ownJettonWallet, v'deferredBonusCount, v'settledTasks, v'workerReputation, v'paused, v'minPayment) = v;
+builder $SettlementMaster$_store(builder build_0, (slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) v) inline {
+    var (v'owner, v'gateway, v'gstdJetton, v'treasury, v'protocolFee, v'workerShare, v'treasuryShare, v'protocolShare, v'baseRate, v'totalSettled, v'totalGSTDMinted, v'taskCount, v'ownJettonWallet, v'deferredBonusCount, v'minMasterBalance, v'settledTasks, v'workerReputation, v'paused, v'minPayment) = v;
     build_0 = build_0.store_slice(v'owner);
     build_0 = build_0.store_slice(v'gateway);
     build_0 = build_0.store_slice(v'gstdJetton);
@@ -491,6 +494,7 @@ builder $SettlementMaster$_store(builder build_0, (slice, slice, slice, slice, s
     var build_2 = begin_cell();
     build_2 = build_2.store_slice(v'ownJettonWallet);
     build_2 = build_2.store_uint(v'deferredBonusCount, 32);
+    build_2 = build_2.store_varuint16(v'minMasterBalance);
     build_2 = build_2.store_dict(v'settledTasks);
     build_2 = build_2.store_dict(v'workerReputation);
     build_2 = build_2.store_int(v'paused, 1);
@@ -500,7 +504,7 @@ builder $SettlementMaster$_store(builder build_0, (slice, slice, slice, slice, s
     return build_0;
 }
 
-(slice, ((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int))) $SettlementMaster$_load(slice sc_0) inline {
+(slice, ((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int))) $SettlementMaster$_load(slice sc_0) inline {
     var v'owner = sc_0~load_msg_addr();
     var v'gateway = sc_0~load_msg_addr();
     var v'gstdJetton = sc_0~load_msg_addr();
@@ -517,11 +521,12 @@ builder $SettlementMaster$_store(builder build_0, (slice, slice, slice, slice, s
     slice sc_2 = sc_1~load_ref().begin_parse();
     var v'ownJettonWallet = sc_2~load_msg_addr();
     var v'deferredBonusCount = sc_2~load_uint(32);
+    var v'minMasterBalance = sc_2~load_varuint16();
     var v'settledTasks = sc_2~load_dict();
     var v'workerReputation = sc_2~load_dict();
     var v'paused = sc_2~load_int(1);
     var v'minPayment = sc_2~load_varuint16();
-    return (sc_0, (v'owner, v'gateway, v'gstdJetton, v'treasury, v'protocolFee, v'workerShare, v'treasuryShare, v'protocolShare, v'baseRate, v'totalSettled, v'totalGSTDMinted, v'taskCount, v'ownJettonWallet, v'deferredBonusCount, v'settledTasks, v'workerReputation, v'paused, v'minPayment));
+    return (sc_0, (v'owner, v'gateway, v'gstdJetton, v'treasury, v'protocolFee, v'workerShare, v'treasuryShare, v'protocolShare, v'baseRate, v'totalSettled, v'totalGSTDMinted, v'taskCount, v'ownJettonWallet, v'deferredBonusCount, v'minMasterBalance, v'settledTasks, v'workerReputation, v'paused, v'minPayment));
 }
 
 (slice, ((slice, slice, slice, slice))) $SettlementMaster$init$_load(slice sc_0) inline {
@@ -533,7 +538,7 @@ builder $SettlementMaster$_store(builder build_0, (slice, slice, slice, slice, s
     return (sc_0, (v'owner, v'gstdJetton, v'treasury, v'protocolFee));
 }
 
-(slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $SettlementMaster$_contract_load() impure inline {
+(slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $SettlementMaster$_contract_load() impure inline {
     slice $sc = get_data().begin_parse();
     int $loaded = $sc~load_int(1);
     if ($loaded) {
@@ -546,7 +551,7 @@ builder $SettlementMaster$_store(builder build_0, (slice, slice, slice, slice, s
     }
 }
 
-() $SettlementMaster$_contract_store((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) v) impure inline {
+() $SettlementMaster$_contract_store((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) v) impure inline {
     builder b = begin_cell();
     b = b.store_int(true, 1);
     b = $SettlementMaster$_store(b, v);
@@ -557,8 +562,8 @@ builder $SettlementMaster$_store(builder build_0, (slice, slice, slice, slice, s
 ;; Contract SettlementMaster functions
 ;;
 
-(slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $SettlementMaster$_contract_init(slice $owner, slice $gstdJetton, slice $treasury, slice $protocolFee) impure inline {
-    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = (null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null());
+(slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $SettlementMaster$_contract_init(slice $owner, slice $gstdJetton, slice $treasury, slice $protocolFee) impure inline {
+    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = (null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null(), null());
     $self'owner = $owner;
     $self'gateway = $owner;
     $self'gstdJetton = $gstdJetton;
@@ -575,43 +580,50 @@ builder $SettlementMaster$_store(builder build_0, (slice, slice, slice, slice, s
     $self'minPayment = 50000000;
     $self'ownJettonWallet = __gen_slice_address_61ab4641fa30d9310391025086eec65d200d79268e1b7cd402565e01ba64be3c();
     $self'deferredBonusCount = 0;
-    return ($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment);
+    $self'minMasterBalance = 1000000000;
+    return ($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment);
 }
 
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), (int, int, int, int)) $SettlementMaster$_fun_get_settlement_stats((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), (int, int, int, int)) $SettlementMaster$_fun_get_settlement_stats((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
     var $fresh$ret_16 = $SettlementStats$_constructor_totalSettled_totalGSTDMinted_taskCount_baseRate($self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'baseRate);
-    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_16);
+    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_16);
 }
 
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), int) $SettlementMaster$_fun_worker_reputation((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self, slice $worker) impure inline_ref {
-    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), int) $SettlementMaster$_fun_worker_reputation((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self, slice $worker) impure inline_ref {
+    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
     var $fresh$ret_17 = __tact_dict_get_slice_int($self'workerReputation, 267, $worker, 257);
-    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_17);
+    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_17);
 }
 
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), int) $SettlementMaster$_fun_deferred_bonus_count((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), int) $SettlementMaster$_fun_deferred_bonus_count((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
     var $fresh$ret_18 = $self'deferredBonusCount;
-    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_18);
+    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_18);
 }
 
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), (int, int, int)) $SettlementMaster$_fun_get_revenue_split((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
-    var $fresh$ret_19 = $RevenueSplit$_constructor_worker_treasury_protocol($self'workerShare, $self'treasuryShare, $self'protocolShare);
-    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_19);
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), int) $SettlementMaster$_fun_min_master_balance((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
+    var $fresh$ret_19 = $self'minMasterBalance;
+    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_19);
 }
 
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), (slice, slice, slice, slice)) $SettlementMaster$_fun_get_addresses((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
-    var $fresh$ret_20 = $ContractAddresses$_constructor_gstdJetton_treasury_protocolFee_owner($self'gstdJetton, $self'treasury, $self'protocolFee, $self'owner);
-    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_20);
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), (int, int, int)) $SettlementMaster$_fun_get_revenue_split((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
+    var $fresh$ret_20 = $RevenueSplit$_constructor_worker_treasury_protocol($self'workerShare, $self'treasuryShare, $self'protocolShare);
+    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_20);
 }
 
-((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int), int) $SettlementMaster$_fun_is_paused((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, cell, cell, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
-    var $fresh$ret_21 = $self'paused;
-    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_21);
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), (slice, slice, slice, slice)) $SettlementMaster$_fun_get_addresses((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
+    var $fresh$ret_21 = $ContractAddresses$_constructor_gstdJetton_treasury_protocolFee_owner($self'gstdJetton, $self'treasury, $self'protocolFee, $self'owner);
+    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_21);
+}
+
+((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int), int) $SettlementMaster$_fun_is_paused((slice, slice, slice, slice, slice, int, int, int, int, int, int, int, slice, int, int, cell, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)) = $self;
+    var $fresh$ret_22 = $self'paused;
+    return (($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment), $fresh$ret_22);
 }
 
 ;;
@@ -634,6 +646,12 @@ _ %worker_reputation(slice $worker) method_id(129044) {
 _ %deferred_bonus_count() method_id(107408) {
     var self = $SettlementMaster$_contract_load();
     var res = self~$SettlementMaster$_fun_deferred_bonus_count();
+    return res;
+}
+
+_ %min_master_balance() method_id(126557) {
+    var self = $SettlementMaster$_contract_load();
+    var res = self~$SettlementMaster$_fun_min_master_balance();
     return res;
 }
 
@@ -681,7 +699,7 @@ _ %owner() method_id(83229) {
     __tact_context_sender = msg_sender_addr;
     
     ;; Load contract data
-    var ($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment) = $SettlementMaster$_contract_load();
+    var ($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment) = $SettlementMaster$_contract_load();
     
     ;; Handle bounced messages
     if (msg_bounced) {
@@ -695,7 +713,7 @@ _ %owner() method_id(83229) {
         if (op == 1500073070) {
             var ($src'taskId, $src'amount) = in_msg~$WorkerPayment$_load_bounced();
             $global_send($SendParameters$_constructor_to_value_mode_bounce_body($self'treasury, 0, 66, false, __gen_cell_cell_ebdaba3b7f6e6685e5e56535cbcbe76d7c312f6fabe26d4760c96e76e01a5dc9()));
-            $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
+            $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
             return ();
         }
         
@@ -707,7 +725,7 @@ _ %owner() method_id(83229) {
         var $msg'gateway = in_msg~load_msg_addr();
         throw_unless(63399, ( equal_slices_bits(__tact_context_get_sender(), $self'owner) ));
         $self'gateway = $msg'gateway;
-        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
+        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
         return ();
     }
     
@@ -723,6 +741,7 @@ _ %owner() method_id(83229) {
         throw_unless(32292, ( ~ equal_slices_bits($msg'workerAddr, __gen_slice_address_61ab4641fa30d9310391025086eec65d200d79268e1b7cd402565e01ba64be3c()) ));
         throw_unless(54291, null?(__tact_dict_get_int_int($self'settledTasks, 257, $msg'taskId, 1)));
         $self'settledTasks~__tact_dict_set_int_int(257, $msg'taskId, true, 1);
+        throw_unless(24976, ($global_myBalance() >= ($self'minMasterBalance + 350000000)));
         throw_unless(16246, ($Context$_get_value(__tact_context_get()) > 100000000));
         int $total = ($Context$_get_value(__tact_context_get()) - 100000000);
         throw_unless(8484, ($total >= $self'minPayment));
@@ -756,7 +775,7 @@ _ %owner() method_id(83229) {
             $self'deferredBonusCount = ($self'deferredBonusCount + 1);
             $global_send($SendParameters$_constructor_to_value_mode_bounce_body($self'owner, 10000000, 2, false, __gen_cell_cell_06ad2847a2365ab317625e68b9a16fc7522d8ba8e54b409ce324ba7f81bbca44()));
         }
-        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
+        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
         return ();
     }
     
@@ -765,7 +784,7 @@ _ %owner() method_id(83229) {
         var $msg'wallet = in_msg~load_msg_addr();
         throw_unless(63399, ( equal_slices_bits(__tact_context_get_sender(), $self'owner) ));
         $self'ownJettonWallet = $msg'wallet;
-        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
+        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
         return ();
     }
     
@@ -780,7 +799,7 @@ _ %owner() method_id(83229) {
         $self'workerShare = $msg'worker;
         $self'treasuryShare = $msg'treasury;
         $self'protocolShare = $msg'protocol;
-        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
+        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
         return ();
     }
     
@@ -793,7 +812,7 @@ _ %owner() method_id(83229) {
         $self'treasury = $msg'treasury;
         $self'protocolFee = $msg'protocolFee;
         $self'gstdJetton = $msg'gstdJetton;
-        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
+        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
         return ();
     }
     
@@ -803,7 +822,17 @@ _ %owner() method_id(83229) {
         throw_unless(63399, ( equal_slices_bits(__tact_context_get_sender(), $self'owner) ));
         throw_unless(27818, ($msg'rate > 0));
         $self'baseRate = $msg'rate;
-        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
+        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
+        return ();
+    }
+    
+    ;; Receive SetMinMasterBalance message
+    if (op == 3065621347) {
+        var $msg'floor = in_msg~load_varuint16();
+        throw_unless(63399, ( equal_slices_bits(__tact_context_get_sender(), $self'owner) ));
+        throw_unless(29560, ($msg'floor >= 500000000));
+        $self'minMasterBalance = $msg'floor;
+        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
         return ();
     }
     
@@ -812,15 +841,15 @@ _ %owner() method_id(83229) {
         var $msg'paused = in_msg~load_int(1);
         throw_unless(63399, ( equal_slices_bits(__tact_context_get_sender(), $self'owner) ));
         $self'paused = $msg'paused;
-        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
+        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
         return ();
     }
     
     ;; Receive Deploy message
     if (op == 0x946a98b6) {
         var $deploy'queryId = in_msg~load_uint(64);
-        ($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)~$SettlementMaster$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId), begin_cell()));
-        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
+        ($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment)~$SettlementMaster$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId), begin_cell()));
+        $SettlementMaster$_contract_store(($self'owner, $self'gateway, $self'gstdJetton, $self'treasury, $self'protocolFee, $self'workerShare, $self'treasuryShare, $self'protocolShare, $self'baseRate, $self'totalSettled, $self'totalGSTDMinted, $self'taskCount, $self'ownJettonWallet, $self'deferredBonusCount, $self'minMasterBalance, $self'settledTasks, $self'workerReputation, $self'paused, $self'minPayment));
         return ();
     }
     

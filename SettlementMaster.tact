@@ -49,6 +49,10 @@ message SetBaseRate {
     rate: Int as coins; // nanoGSTD per compute unit
 }
 
+message SetMinMasterBalance {
+    floor: Int as coins; // contract-enforced settle floor (nanoTON)
+}
+
 message EmergencyPause {
     paused: Bool;
 }
@@ -89,6 +93,17 @@ contract SettlementMaster with Deployable, Ownable {
     // the 0.3 TON relay. Previously these vanished silently (SendIgnoreErrors).
     deferredBonusCount: Int as uint32;
 
+    // ── Balance-band enforcement (2026-10-14 amendment) ────────────────
+    // RED-lane threat 3 (launch brief 2026-10-13): the greed law [floor 1,
+    // cap 10] TON lived only in the client drain loop, so ANY caller could
+    // walk the master into the low band where its sends silently drop.
+    // The floor is now contract state: a settle REVERTS unless the master's
+    // balance covers the floor plus the bonus-relay reserve, so the
+    // silent-drop band is unreachable by any caller. Below-band settles
+    // bounce loudly at the funding party instead of executing half a
+    // settlement. Default mirrors the client greed-law floor.
+    minMasterBalance: Int as coins;
+
     // ── Replay / double-settlement guard ─────────────────────────────────
     settledTasks: map<Int, Bool>; // taskId => true; prevents paying same task twice
     workerReputation: map<Address, Int>; // worker address => settled task count (Phase 4 reputation, perimeter babystep 2)
@@ -127,6 +142,7 @@ contract SettlementMaster with Deployable, Ownable {
         self.minPayment = ton("0.05"); // effective minimum payment after gas reserve (total = value - 0.1 TON gas)
         self.ownJettonWallet = newAddress(0, 0); // set via SetOwnJettonWallet after deploy
         self.deferredBonusCount = 0;
+        self.minMasterBalance = ton("1"); // greed-law floor, client loop gstd_drain.py [floor 1, cap 10]
     }
 
     // ── DAO: Set gateway address ─────────────────────────────────────────
@@ -145,6 +161,20 @@ contract SettlementMaster with Deployable, Ownable {
         // ── Replay guard: each taskId can only be settled once ───────────
         require(self.settledTasks.get(msg.taskId) == null, "Task already settled");
         self.settledTasks.set(msg.taskId, true);
+
+        // ── Contract-level balance band (2026-10-14 amendment) ──────────
+        // Enforced BEFORE any state that matters and before any send: a
+        // settle on a master below floor + relay reserve bounces in full.
+        // myBalance() at this point includes the incoming payment, so a
+        // large settle may still cross the band legitimately — but no
+        // settle can leave the master materially below the floor. The
+        // relay check further down stays as the second belt: it governs
+        // the bonus inside a band-legal settle (e.g. ownJettonWallet
+        // unset, or gas eaten by nested sends mid-flight).
+        require(
+            myBalance() >= self.minMasterBalance + ton("0.35"),
+            "Master balance below band floor",
+        );
 
         // Gas reserve: 0.1 TON kept for gas + nested sends. Actual minimum call value = 0.15 TON.
         require(context().value > ton("0.1"), "Insufficient value for gas reserve");
@@ -317,6 +347,15 @@ contract SettlementMaster with Deployable, Ownable {
         self.baseRate = msg.rate;
     }
 
+    // ── DAO: Set the balance-band floor (2026-10-14 amendment) ──────────
+    // Must stay above the bonus-relay reserve (0.35 TON) or the band
+    // would permit settles whose relay can only defer.
+    receive(msg: SetMinMasterBalance) {
+        require(sender() == self.owner, "Only DAO");
+        require(msg.floor >= ton("0.5"), "Floor below relay reserve");
+        self.minMasterBalance = msg.floor;
+    }
+
     // ── Emergency pause ─────────────────────────────────────────────────
     receive(msg: EmergencyPause) {
         require(sender() == self.owner, "Only DAO");
@@ -342,6 +381,13 @@ contract SettlementMaster with Deployable, Ownable {
     // low master balance. Count > 0 means the pool needs a top-up.
     get fun deferred_bonus_count(): Int {
         return self.deferredBonusCount;
+    }
+
+    // Balance-band observability (2026-10-14 amendment): the enforced settle
+    // floor. Readers (drain loop, fleet read) check myBalance against this
+    // instead of hardcoding the greed-law floor client-side.
+    get fun min_master_balance(): Int {
+        return self.minMasterBalance;
     }
 
     get fun get_revenue_split(): RevenueSplit {

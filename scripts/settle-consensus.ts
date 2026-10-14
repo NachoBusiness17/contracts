@@ -20,7 +20,10 @@ import { GSTDJettonWallet } from '../build/GSTDJetton/GSTDJetton_GSTDJettonWalle
 import { SettlementMaster } from '../build/SettlementMaster/SettlementMaster_SettlementMaster';
 
 const V2J = Address.parse('EQCgvt0MRmJPl-zQ8rZaPXpQnQgDQMQ_21plPSeYF4-zSAf0');
-const V3S = Address.parse('EQDw9oXaR1lmwaVJdJFYA2heY11ktvdS0Jsdnee7Qqxur_g8');
+// GSTD_MASTER_ADDRESS override (2026-10-14 soak): the default stays the v6
+// production master; the v7 soak sets the env var to point the bridge at the
+// amended build's fresh address. Never set this env in the standing cron.
+const V3S = Address.parse(process.env.GSTD_MASTER_ADDRESS || 'EQDw9oXaR1lmwaVJdJFYA2heY11ktvdS0Jsdnee7Qqxur_g8');
 const NANO = BigInt('1000000000');
 const NODE_WALLETS: Record<string, string> = {
     'desktop-7c70ksc': 'UQBX4TEs0dCvV7CzDpUmj04niFPVd0jjbCfhquO8dPxxa3BJ',

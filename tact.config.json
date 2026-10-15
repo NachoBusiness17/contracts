@@ -31,16 +31,6 @@
             "output": "./build/SovereignVault"
         },
         {
-            "name": "SettlementRouter",
-            "path": "./SettlementRouter.tact",
-            "output": "./build/SettlementRouter"
-        },
-        {
-            "name": "Escrow",
-            "path": "./escrow.tact",
-            "output": "./build/Escrow"
-        },
-        {
             "name": "EscrowComplete",
             "path": "./escrow_complete.tact",
             "output": "./build/EscrowComplete"

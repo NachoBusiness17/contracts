@@ -21,9 +21,11 @@ import { SettlementMaster } from '../build/SettlementMaster/SettlementMaster_Set
 
 const V2J = Address.parse('EQCgvt0MRmJPl-zQ8rZaPXpQnQgDQMQ_21plPSeYF4-zSAf0');
 // GSTD_MASTER_ADDRESS override (2026-10-14 soak): the default stays the v6
-// production master; the v7 soak sets the env var to point the bridge at the
-// amended build's fresh address. Never set this env in the standing cron.
-const V3S = Address.parse(process.env.GSTD_MASTER_ADDRESS || 'EQDw9oXaR1lmwaVJdJFYA2heY11ktvdS0Jsdnee7Qqxur_g8');
+// production master; the soak sets the env var to point the bridge at a test
+// target. Never set this env in the standing cron. Cutover 2026-10-14: the
+// standing cron now settles on v8 (two-tier relay build); v6 is retired from
+// production - its rep history stayed behind by design (testnet reset).
+const V3S = Address.parse(process.env.GSTD_MASTER_ADDRESS || 'EQArRbzf9lhdzIytV_DuROSWzdWvkCo1KVrjrsoMhVsUdQTu');
 const NANO = BigInt('1000000000');
 const NODE_WALLETS: Record<string, string> = {
     'desktop-7c70ksc': 'UQBX4TEs0dCvV7CzDpUmj04niFPVd0jjbCfhquO8dPxxa3BJ',

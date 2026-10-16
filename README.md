@@ -153,23 +153,25 @@ Higher tiers also increase governance voting weight and receive priority task ro
 
 ---
 
-## Deployed Contracts (TON Mainnet)
+## Declared TON Mainnet Deployments
 
 | Contract | Address |
 |---|---|
 | GSTDJetton | `EQDv6cYW9nNiKjN3Nwl8D6ABjUiH1gYfWVGZhfP7-9tZskTO` |
 | SettlementMaster | `EQAhuR_cEaIkRqs4gvgXSD-Qw2FRUkkBUZQkTBrFT5n-ZrSS` |
+| SettlementMasterV2 | `EQCi-QjafvcYE7wgl9Dc5jAFJrmiy_oGfcobzORb2gZQezhE` |
 | EcosystemTreasury | `EQAbtTCsty8-gpX-45eotGWxnYG1c7ew7NFsZ9LJBRiv_Ii_` |
 | AgentRegistry | `EQDtWcGCQXLFdh7TmkL5QFbFNYXxL9mjOk4ehmsNFwCtsDoT` |
 | DAOVoting | `EQBa-hyO3JkcRJNyYKKOqBjsQ6KAS-dAHj6rf8KOuH4Jzls5` |
 | Escrow | `EQCucUHZGCr8KwBalmumsITvtMBtc5ZylAfw7sJk5SXpBWVh` |
+| EscrowPhase1Legacy | `EQDqdyFsruwXzlScIVM0c7LKbBb4EOgwLeFO4bpNnuwc7rTF` |
 
-All addresses above verified live on-chain 2026-08-13 (real code deployed,
-transaction history present). Note the Escrow address differs from the one
-in `deployment-mainnet.json`'s Phase 1 record (`EQDqdyFsruwXzlScIVM0c7LKbBb4EOgwLeFO4bpNnuwc7rTF`)
-— that older address also still has live code on-chain, but this table is
-the current canonical one; the JSON predates whatever redeployment produced
-the address above and was never updated to match.
+`Escrow` is the canonical address; `EscrowPhase1Legacy` is retained for
+historical reference. `deployment-mainnet.json` records both addresses.
+An active account with code does not prove contract behavior or that the
+contracts are correctly wired together. `npm run verify` performs read-only
+account-code checks and verifies the GSTD Jetton master getter; ownership,
+permissions, settlement, and wallet flows still require separate checks.
 
 ---
 
@@ -207,7 +209,7 @@ they were originally deployed, it wasn't via a script that's still here.
 | Repo | Description |
 |---|---|
 | [gstdcoin/web](https://github.com/gstdcoin/web) | Landing page |
-| [gstdcoin/ai](https://github.com/gstdcoin/ai) | Dashboard + Vercel serverless API |
+| [gstdcoin/ai](https://github.com/gstdcoin/ai) | Dashboard and API source |
 | [gstdcoin/gstdbot](https://github.com/gstdcoin/gstdbot) | Node OS software |
 | [gstdcoin/gstd-bridge](https://github.com/gstdcoin/gstd-bridge) | Cross-chain bridge validators |
 | **gstdcoin/contracts** | **Smart contracts (this repo)** |

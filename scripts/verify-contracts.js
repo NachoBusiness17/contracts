@@ -1,108 +1,109 @@
 /**
- * GSTD Contract Verification Script
- * 
- * Verifies all deployed contracts are live and correctly wired:
- * - Checks each contract is deployed and active
- * - Verifies cross-contract permissions (mintAuthority, owner, etc.)
- * - Validates initial state matches expected configuration
+ * Read-only verification of contract accounts listed in deployment-mainnet.json.
+ *
+ * This checks account code and GSTD Jetton master data through TonAPI. It does
+ * not prove that every contract's business logic or cross-contract wiring works.
  */
-
-require('dotenv').config({ path: '../.env' });
 const fs = require('fs');
 const path = require('path');
 
 const NETWORK = process.env.TON_NETWORK || 'mainnet';
+const API_BASE = (process.env.TONAPI_BASE_URL || 'https://tonapi.io/v2').replace(/\/$/, '');
 
-async function main() {
-    console.log('═══════════════════════════════════════════════════');
-    console.log('🔍 GSTD Contract Verification');
-    console.log(`   Network: ${NETWORK}`);
-    console.log('═══════════════════════════════════════════════════\n');
-
-    // Load deployment info
-    const deploymentFile = path.join(__dirname, '..', `deployment-${NETWORK}.json`);
-    if (!fs.existsSync(deploymentFile)) {
-        console.error(`❌ No deployment file found: ${deploymentFile}`);
-        console.error('   Run deploy script first: npm run deploy:mainnet');
-        process.exit(1);
+async function getJson(url) {
+    const response = await fetch(url, {
+        headers: { Accept: 'application/json' },
+        signal: AbortSignal.timeout(15000),
+    });
+    if (!response.ok) {
+        throw new Error(`${url} returned HTTP ${response.status}`);
     }
-
-    const deployment = JSON.parse(fs.readFileSync(deploymentFile, 'utf8'));
-    console.log(`📄 Deployment from: ${deployment.deployedAt}`);
-    console.log(`   Deployer: ${deployment.deployer}\n`);
-
-    const checks = [
-        {
-            name: 'GSTDJetton', checks: [
-                'Contract deployed and active',
-                'totalSupply == 0 (nothing minted yet)',
-                'maxSupply == 1,000,000,000 * 10^9',
-                'owner == deployer',
-                'mintable == true',
-            ]
-        },
-        {
-            name: 'TreasuryGold', checks: [
-                'Contract deployed and active',
-                'goldReserveXAUt == 0',
-                'autoConvertPercent == 70',
-                'owner matches expected',
-            ]
-        },
-        {
-            name: 'DAOVoting', checks: [
-                'Contract deployed and active',
-                'quorumPercent == 10',
-                'timelockHours == 48',
-                'gstdJetton address matches GSTDJetton',
-            ]
-        },
-        {
-            name: 'SettlementMaster', checks: [
-                'Contract deployed and active',
-                'workerShare == 85',
-                'treasuryShare == 10',
-                'protocolShare == 5',
-                'gstdJetton matches GSTDJetton',
-                'treasury matches TreasuryGold',
-                'paused == false',
-            ]
-        },
-        {
-            name: 'AgentRegistry', checks: [
-                'Contract deployed and active',
-                'totalNodes == 0',
-                'settlementContract matches SettlementMaster',
-            ]
-        },
-    ];
-
-    let passed = 0;
-    let total = 0;
-
-    for (const contract of checks) {
-        console.log(`\n📋 ${contract.name}:`);
-        const addr = deployment.contracts[contract.name.toLowerCase()
-            .replace('gstdjetton', 'jetton')
-            .replace('settlementmaster', 'settlement')
-            .replace('treasurygold', 'treasury')
-            .replace('agentregistry', 'registry')
-            .replace('daovoting', 'dao')];
-        console.log(`   Address: ${addr || 'NOT_DEPLOYED'}`);
-
-        for (const check of contract.checks) {
-            total++;
-            // In production: call contract getters to verify
-            console.log(`   ⏳ ${check} — (manual verification needed)`);
-            passed++;
-        }
-    }
-
-    console.log('\n═══════════════════════════════════════════════════');
-    console.log(`🔍 Verification: ${passed}/${total} checks (manual)`);
-    console.log('═══════════════════════════════════════════════════');
-    console.log('\n⚠️  After deploying compiled contracts, re-run this script');
-    console.log('   to automatically verify on-chain state via getters.\n');
+    return response.json();
 }
 
-main().catch(console.error);
+function getDeclaredContracts(deployment) {
+    const sections = [deployment.contracts, deployment.phase2_completed];
+    const contracts = new Map();
+    for (const section of sections) {
+        if (!section || typeof section !== 'object') continue;
+        for (const [name, address] of Object.entries(section)) {
+            if (typeof address === 'string' && /^(EQ|UQ)[A-Za-z0-9_-]{46}$/.test(address)) {
+                contracts.set(name, address);
+            }
+        }
+    }
+    return contracts;
+}
+
+async function verifyAccount(name, address) {
+    try {
+        const account = await getJson(`${API_BASE}/blockchain/accounts/${encodeURIComponent(address)}`);
+        const active = account.status === 'active';
+        const hasCode = typeof account.code === 'string' && account.code.length > 0;
+        const passed = active && hasCode;
+        console.log(`${passed ? 'PASS' : 'FAIL'} ${name}: ${active ? 'active' : account.status || 'unknown'} account, ${hasCode ? 'code present' : 'no code'}`);
+        return passed;
+    } catch (error) {
+        console.error(`FAIL ${name}: ${error instanceof Error ? error.message : String(error)}`);
+        return false;
+    }
+}
+
+async function verifyJettonMaster(address) {
+    try {
+        const result = await getJson(
+            `${API_BASE}/blockchain/accounts/${encodeURIComponent(address)}/methods/get_jetton_data`
+        );
+        const data = result.decoded;
+        if (!result.success || !data || !/^\d+$/.test(String(data.total_supply))) {
+            throw new Error('get_jetton_data did not return decoded Jetton state');
+        }
+        const totalSupply = BigInt(data.total_supply);
+        const expectedSupply = 1_000_000_000n * 1_000_000_000n;
+        const valid = totalSupply === expectedSupply &&
+            data.mintable === false &&
+            (data.admin_address === '' || data.admin_address === null);
+        console.log(`${valid ? 'PASS' : 'FAIL'} GSTDJetton state: supply=${totalSupply}, mintable=${data.mintable}, admin=${data.admin_address || 'none'}`);
+        return valid;
+    } catch (error) {
+        console.error(`FAIL GSTDJetton state: ${error instanceof Error ? error.message : String(error)}`);
+        return false;
+    }
+}
+
+async function main() {
+    if (NETWORK !== 'mainnet') {
+        throw new Error(`Only mainnet is configured; TON_NETWORK=${NETWORK}`);
+    }
+
+    const deploymentFile = path.join(__dirname, '..', `deployment-${NETWORK}.json`);
+    const deployment = JSON.parse(fs.readFileSync(deploymentFile, 'utf8'));
+    const contracts = getDeclaredContracts(deployment);
+    const jettonAddress = contracts.get('GSTDJetton');
+
+    if (contracts.size === 0 || !jettonAddress) {
+        throw new Error(`No valid deployed contract addresses found in ${deploymentFile}`);
+    }
+
+    console.log(`Read-only TON ${NETWORK} account verification via ${API_BASE}`);
+    console.log('Account code checks do not verify business logic, ownership wiring, or end-to-end settlement.');
+
+    const entries = [...contracts.entries()];
+    let passed = 0;
+    for (let index = 0; index < entries.length; index += 3) {
+        const batch = entries.slice(index, index + 3);
+        const results = await Promise.all(batch.map(([name, address]) => verifyAccount(name, address)));
+        passed += results.filter(Boolean).length;
+    }
+
+    const jettonPassed = await verifyJettonMaster(jettonAddress);
+    const total = contracts.size + 1;
+    passed += Number(jettonPassed);
+    console.log(`\n${passed}/${total} read-only checks passed.`);
+    if (passed !== total) process.exitCode = 1;
+}
+
+main().catch(error => {
+    console.error(error instanceof Error ? error.message : error);
+    process.exitCode = 1;
+});

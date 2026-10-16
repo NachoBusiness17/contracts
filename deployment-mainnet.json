@@ -9,10 +9,11 @@
     "GSTDJetton": "EQDv6cYW9nNiKjN3Nwl8D6ABjUiH1gYfWVGZhfP7-9tZskTO",
     "EcosystemTreasury": "EQAbtTCsty8-gpX-45eotGWxnYG1c7ew7NFsZ9LJBRiv_Ii_",
     "SettlementMaster": "EQAhuR_cEaIkRqs4gvgXSD-Qw2FRUkkBUZQkTBrFT5n-ZrSS",
-    "Escrow": "EQDqdyFsruwXzlScIVM0c7LKbBb4EOgwLeFO4bpNnuwc7rTF",
+    "Escrow": "EQCucUHZGCr8KwBalmumsITvtMBtc5ZylAfw7sJk5SXpBWVh",
+    "EscrowPhase1Legacy": "EQDqdyFsruwXzlScIVM0c7LKbBb4EOgwLeFO4bpNnuwc7rTF",
     "SettlementMasterV2": "EQCi-QjafvcYE7wgl9Dc5jAFJrmiy_oGfcobzORb2gZQezhE"
   },
-  "_escrow_note": "The Escrow address above is the Phase 1 deployment. README.md's 'Deployed Contracts' table lists a different, newer Escrow address (EQCucUHZGCr8KwBalmumsITvtMBtc5ZylAfw7sJk5SXpBWVh) — both still have live code on-chain as of 2026-08-13, but README's is the current canonical one. This file was never updated after that redeployment.",
+  "_escrow_note": "Escrow is the canonical address listed in README.md. EscrowPhase1Legacy records the earlier deployment; both accounts have code, but only Escrow is treated as canonical by current integrations.",
   "phase2_completed": {
     "note": "Verified on-chain 2026-08-13 (real code + tx history at each address).",
     "DAOVoting": "EQBa-hyO3JkcRJNyYKKOqBjsQ6KAS-dAHj6rf8KOuH4Jzls5",

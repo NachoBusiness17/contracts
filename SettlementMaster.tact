@@ -224,14 +224,15 @@ contract SettlementMaster with Deployable, Ownable {
         require(self.settledTasks.get(msg.taskId) == null, "Task already settled");
 
         require(
-            self.verifyQuorum(msg.taskId, msg.workerAddr, msg.resultHash, msg.attestationCount, msg.attestations),
+            self.verifyQuorum(msg.taskId, msg.workerAddr, msg.resultHash, msg.computeUnits, msg.gstdBonusAmount, msg.attestationCount, msg.attestations),
             "Insufficient attested quorum",
         );
 
         self.settledTasks.set(msg.taskId, true);
 
-        require(context().value > ton("0.1"), "Insufficient value for gas reserve");
-        let total: Int = context().value - ton("0.1");
+        // F14: reserve covers gas + potential jetton forward (0.12 TON)
+        require(context().value > ton("0.25"), "Insufficient value for gas reserve + jetton forward");
+        let total: Int = context().value - ton("0.25");
         require(total >= self.minPayment, "Payment below minimum");
 
         self.settlePayout(msg.taskId, msg.workerAddr, total, msg.gstdBonusAmount, msg.computeUnits);
@@ -263,7 +264,7 @@ contract SettlementMaster with Deployable, Ownable {
 
             require(self.settledTasks.get(taskId) == null, "Task already settled");
             require(
-                self.verifyQuorum(taskId, msg.workerAddr, resultHash, attestationCount, attestations),
+                self.verifyQuorum(taskId, msg.workerAddr, resultHash, computeUnits, msg.totalGstdBonusAmount, attestationCount, attestations),
                 "Insufficient attested quorum for batch entry",
             );
             self.settledTasks.set(taskId, true);
@@ -339,32 +340,38 @@ contract SettlementMaster with Deployable, Ownable {
         });
 
         // ── 4. Transfer GSTD bonus to worker from pre-funded pool ──────────
-        // Uses standard TEP-74 Jetton Transfer (opcode 0xf8a7ea5).
-        // Admin must pre-fund ownJettonWallet with GSTD before bonuses activate.
+        // F14 FIX: only send the jetton bonus if the contract's remaining
+        // balance can cover the 0.12 TON forward — deficit-spending was
+        // draining the contract until settlements started failing.
         if (actualBonus > 0 && self.ownJettonWallet != newAddress(0, 0)) {
-            send(SendParameters {
-                to: self.ownJettonWallet,
-                value: ton("0.12"),
-                mode: SendIgnoreErrors,
-                bounce: false,
-                body: beginCell()
-                    .storeUint(0xf8a7ea5, 32)      // Transfer opcode (TEP-74)
-                    .storeUint(taskId, 64)           // queryId
-                    .storeCoins(actualBonus)         // amount
-                    .storeAddress(workerAddr)        // destination
-                    .storeAddress(workerAddr)        // response_destination
-                    .storeBit(false)                 // no custom payload
-                    .storeCoins(ton("0.01"))         // forward_ton_amount (notify worker)
-                    .storeBit(false)                 // no forward payload
-                    .endCell(),
-            });
+            let jettonForward: Int = ton("0.12");
+            let gasMargin: Int = ton("0.05");
+            if (myBalance() > jettonForward + gasMargin) {
+                send(SendParameters {
+                    to: self.ownJettonWallet,
+                    value: jettonForward,
+                    mode: SendIgnoreErrors,
+                    bounce: false,
+                    body: beginCell()
+                        .storeUint(0xf8a7ea5, 32)      // Transfer opcode (TEP-74)
+                        .storeUint(taskId, 64)           // queryId
+                        .storeCoins(actualBonus)         // amount
+                        .storeAddress(workerAddr)        // destination
+                        .storeAddress(workerAddr)        // response_destination
+                        .storeBit(false)                 // no custom payload
+                        .storeCoins(ton("0.01"))         // forward_ton_amount (notify worker)
+                        .storeBit(false)                 // no forward payload
+                        .endCell(),
+                });
+            }
         }
     }
 
     // ── Verify a quorum of distinct, registered-attestor signatures over
-    // sha256(taskId . workerAddr . resultHash). Bounded to <= 5 entries so
-    // gas cost stays predictable regardless of attestationCount claims. ──
-    fun verifyQuorum(taskId: Int, workerAddr: Address, resultHash: Int, count: Int, attestations: Cell): Bool {
+    // sha256(taskId . workerAddr . resultHash . computeUnits . gstdBonusAmount).
+    // F13 FIX: payout fields are now inside the signed digest, so a submitter
+    // cannot inflate them after attestors sign. Bounded to <= 5 entries. ──
+    fun verifyQuorum(taskId: Int, workerAddr: Address, resultHash: Int, computeUnits: Int, gstdBonusAmount: Int, count: Int, attestations: Cell): Bool {
         if (count < self.quorumThreshold) { return false; }
         if (count > 5) { return false; } // MaxAttestations
 
@@ -372,6 +379,8 @@ contract SettlementMaster with Deployable, Ownable {
             .storeUint(taskId, 64)
             .storeAddress(workerAddr)
             .storeUint(resultHash, 256)
+            .storeUint(computeUnits, 64)
+            .storeCoins(gstdBonusAmount)
             .endCell()
             .hash();
 
